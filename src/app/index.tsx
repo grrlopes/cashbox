@@ -1,27 +1,19 @@
 import Colors from '@/constants/Colors'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { useState } from 'react'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-const handleSigin = () => {
-  Alert.alert(
-    "Delete Item",
-    "Are you sure you want to delete this item?",
-    [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: () => console.log("Item deleted"),
-      },
-    ],
-    { cancelable: false }
-  );
-}
-
 export default function Login() {
+  const [email, setEmail] = useState<string>('');
+
+  const handleSigin = () => {
+    if (email === "Test") {
+      router.replace('/(panel)/profile/page')
+    } else {
+      Alert.alert('There is something wrong with your credencial');
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -36,7 +28,12 @@ export default function Login() {
       <View style={styles.form}>
         <View>
           <Text style={styles.label}> Email</Text>
-          <TextInput placeholder='Digite email...' style={styles.input} />
+          <TextInput
+            placeholder='Digite email...'
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+          />
         </View>
 
         <View>
