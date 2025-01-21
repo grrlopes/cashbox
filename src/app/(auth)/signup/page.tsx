@@ -28,16 +28,26 @@ export default function Signup() {
         <View style={styles.form}>
           <View>
             <Text style={styles.label}>Fist name</Text>
-            <TextInput placeholder='Digite email...' style={styles.input} />
+            <TextInput placeholder='Type name...' style={styles.input} />
           </View>
 
           <View>
             <Text style={styles.label}>Second name</Text>
-            <TextInput placeholder='Digite a sua senha...' secureTextEntry style={styles.input} />
+            <TextInput placeholder='Type surname...' secureTextEntry style={styles.input} />
+          </View>
+
+          <View>
+            <Text style={styles.label}>Email</Text>
+            <TextInput placeholder='Type email...' secureTextEntry style={styles.input} />
+          </View>
+
+          <View>
+            <Text style={styles.label}>Password</Text>
+            <TextInput placeholder='Type password...' style={styles.input} />
           </View>
 
           <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>Acessasr</Text>
+            <Text style={styles.buttonText}>Sign Up</Text>
           </Pressable>
 
         </View>

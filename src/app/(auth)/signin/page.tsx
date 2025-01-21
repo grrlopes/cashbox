@@ -24,12 +24,11 @@ export default function Login() {
         <Text style={styles.sloganText}>The key to success is financial intelligence.</Text>
       </View>
 
-
       <View style={styles.form}>
         <View>
-          <Text style={styles.label}> Email</Text>
+          <Text style={styles.label}> Name</Text>
           <TextInput
-            placeholder='Digite email...'
+            placeholder='Type name...'
             style={styles.input}
             value={email}
             onChangeText={setEmail}
@@ -37,17 +36,29 @@ export default function Login() {
         </View>
 
         <View>
-          <Text style={styles.label}>Senha</Text>
-          <TextInput placeholder='Digite a sua senha...' secureTextEntry style={styles.input} />
+          <Text style={styles.label}> Surname</Text>
+          <TextInput
+            placeholder='Type surname...'
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
+
+        <View>
+          <Text style={styles.label}>Password</Text>
+          <TextInput placeholder='Type password...' secureTextEntry style={styles.input} />
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleSigin}>
-          <Text style={styles.buttonText}>Acessasr</Text>
+          <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
 
-        <Link href='/(auth)/signup/page'>
-          <Text>Ainda nao cadastrado</Text>
-        </Link>
+        <Text>Don't have an account?
+          <Link href='/(auth)/signup/page'>
+            <Text style={styles.signing}> Sign up</Text>
+          </Link>
+        </Text>
       </View>
     </View>
   )
@@ -108,5 +119,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Colors.dark.white,
     fontWeight: 'bold',
+  },
+  signing: {
+    fontWeight: 'bold',
+    color: Colors.dark.accentIndigo,
   }
 })
