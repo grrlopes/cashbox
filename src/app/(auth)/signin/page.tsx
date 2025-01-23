@@ -1,12 +1,15 @@
+import { doLogin } from '@/api/auth';
 import Colors from '@/constants/Colors'
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 export default function Login() {
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>('root@admin.local');
+  const [password, setPassword] = useState<string>('');
 
   const handleSigin = () => {
+    doLogin({ email: email, password: password });
     if (email === "Test") {
       router.replace('/(panel)/profile/page')
     } else {
@@ -26,19 +29,9 @@ export default function Login() {
 
       <View style={styles.form}>
         <View>
-          <Text style={styles.label}> Name</Text>
+          <Text style={styles.label}>Email</Text>
           <TextInput
-            placeholder='Type name...'
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-          />
-        </View>
-
-        <View>
-          <Text style={styles.label}> Surname</Text>
-          <TextInput
-            placeholder='Type surname...'
+            placeholder='Type email...'
             style={styles.input}
             value={email}
             onChangeText={setEmail}
@@ -47,7 +40,13 @@ export default function Login() {
 
         <View>
           <Text style={styles.label}>Password</Text>
-          <TextInput placeholder='Type password...' secureTextEntry style={styles.input} />
+          <TextInput
+            placeholder='Type password...'
+            secureTextEntry
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+          />
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleSigin}>

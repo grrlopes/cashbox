@@ -9,7 +9,7 @@ export default function RootLayout() {
 
 const MainLayout = () => {
   useEffect(() => {
-    if ('test' == 'test') {
+    if ('testd' == 'test') {
       router.replace('/(panel)/profile/page')
       return;
     }
