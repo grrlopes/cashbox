@@ -1,4 +1,4 @@
-import { doLogin } from '@/api/auth';
+import { doLogin, validToken } from '@/api/auth';
 import Colors from '@/constants/Colors'
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
@@ -8,11 +8,14 @@ export default function Login() {
   const [email, setEmail] = useState<string>('root@admin.local');
   const [password, setPassword] = useState<string>('');
 
-  const handleSigin = () => {
-    doLogin({ email: email, password: password });
-    if (email === "Test") {
-      router.replace('/(panel)/profile/page')
-    } else {
+  const handleSigin = async () => {
+    try {
+      await doLogin({ email: email, password: password });
+      const logged = await validToken()
+      if (logged) {
+        router.replace('/(panel)/profile/page')
+      }
+    } catch (e) {
       Alert.alert('There is something wrong with your credencial');
     }
   }

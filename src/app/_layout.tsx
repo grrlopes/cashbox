@@ -1,3 +1,4 @@
+import { validToken } from '@/api/auth'
 import { Stack, router } from 'expo-router'
 import { useEffect } from 'react'
 
@@ -9,13 +10,17 @@ export default function RootLayout() {
 
 const MainLayout = () => {
   useEffect(() => {
-    if ('testd' == 'test') {
-      router.replace('/(panel)/profile/page')
-      return;
-    }
-    router.replace('/(auth)/signin/page')
+    const checkToken = async () => {
+      const logged = await validToken();
+      if (logged) {
+        router.replace('/(panel)/profile/page');
+      } else {
+        router.replace('/(auth)/signin/page');
+      }
+    };
 
-  }, [])
+    checkToken();
+  }, [router]);
 
   return (
     <Stack>
