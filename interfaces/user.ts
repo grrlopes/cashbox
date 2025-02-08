@@ -1,8 +1,6 @@
-import { RecordId } from "surrealdb";
-
 type User = {
   email: string;
-  id: RecordId;
+  id: string;
   name: string;
   password: string;
   role: string;
