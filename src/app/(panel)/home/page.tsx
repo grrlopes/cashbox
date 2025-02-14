@@ -1,7 +1,10 @@
 import { Ionicons } from '@expo/vector-icons'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 
 export default function Home() {
+  const handlePress = () => {
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.status}>
@@ -13,7 +16,14 @@ export default function Home() {
           <Ionicons name='link' size={30} />
         </View>
       </View>
-    </SafeAreaView>
+      <View style={styles.plusBtnContainer}>
+        <Pressable
+          onPress={handlePress}
+          style={({ pressed }) => pressed ? [styles.plusBtn, { transform: [{ scale: 0.8 }] }] : [styles.plusBtn]}>
+          <Ionicons name='add-outline' size={40} color={'white'} />
+        </Pressable>
+      </View>
+    </SafeAreaView >
   )
 }
 
@@ -30,5 +40,18 @@ const styles = StyleSheet.create({
   profile: {
     flexDirection: "column",
     backgroundColor: "red",
-  }
+  },
+  plusBtnContainer: {
+    position: 'absolute',
+    bottom: 40,
+    right: 20,
+  },
+  plusBtn: {
+    width: 50,
+    height: 50,
+    backgroundColor: "black",
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 })
