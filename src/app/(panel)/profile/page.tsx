@@ -4,6 +4,7 @@ export default function Profile() {
   return (
     <View style={styles.container}>
       <Text>Profile paged</Text>
+      <Text>Logoff</Text>
     </View>
   )
 }

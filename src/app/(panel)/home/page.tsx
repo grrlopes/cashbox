@@ -1,13 +1,17 @@
+import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 
 export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <Text>fsdfsdf</Text>
-      </View>
-      <View>
-        <Text>Home landing page</Text>
+      <View style={styles.status}>
+        <View style={styles.profile}>
+          <Text>Good Night</Text>
+          <Text>Name</Text>
+        </View>
+        <View>
+          <Ionicons name='link' size={30} />
+        </View>
       </View>
     </SafeAreaView>
   )
@@ -16,5 +20,15 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  status: {
+    flexDirection: "row",
+    marginLeft: 45,
+    marginTop: 10,
+    justifyContent: "space-between"
+  },
+  profile: {
+    flexDirection: "column",
+    backgroundColor: "red",
   }
 })

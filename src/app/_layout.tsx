@@ -34,13 +34,14 @@ const MainLayout = () => {
       <Stack.Screen name='index' options={{ headerShown: false }} />
       <Stack.Screen name='(auth)/signin/page' options={{ headerShown: false }} />
       <Stack.Screen name='(auth)/signup/page' options={{ headerShown: false }} />
-      <Stack.Screen name='(panel)/profile/page' options={{ headerShown: true }} />
+      <Stack.Screen name='(panel)/profile/page' options={{ headerShown: true, headerTransparent: true, headerTitle: "" }} />
       <Stack.Screen name='(panel)/home/page' options={{
         headerShown: true,
-        headerTransparent: false,
+        headerTransparent: true,
+        headerTitle: "",
         headerLeft: () => (
           <TouchableOpacity onPress={() => { userProfile() }} style={{ marginLeft: 0 }}>
-            <Ionicons name='person-circle' size={40} color={'grey'} />
+            <Ionicons name='person-circle' size={30} color={'grey'} />
           </TouchableOpacity>
         )
       }} />
