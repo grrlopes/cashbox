@@ -13,7 +13,7 @@ export default function Login() {
       await doLogin({ email: email, password: password });
       const logged = await validToken()
       if (logged) {
-        router.replace('/(panel)/profile/page')
+        router.replace('/(panel)/home/page')
       }
     } catch (e) {
       Alert.alert('There is something wrong with your credencial');

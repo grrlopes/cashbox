@@ -52,6 +52,7 @@ export default {
     white: "#FFFFFF",
     black: "#000000",
     lightGray: "#E0E0E0",
+    lighterGray: "#f2f2f2",
     mediumGray: "#BDBDBD",
     darkGray: "#757575",
 
@@ -61,10 +62,12 @@ export default {
     textDisabled: "#757575", // Disabled Text
 
     // Background Colors
-    background: "#121212", // Dark Background
+    background: "#333334",
     cardBackground: "#1E1E1E",
     inputBackground: "#1E1E1E",
     buttonBackground: "#BDBDBD",
+    titlebackground: "#797979",
+
 
     // Border Colors
     borderLight: "#616161",
@@ -87,5 +90,8 @@ export default {
     accentAmber: "#FFD54F",
     accentOrange: "#FFB74D",
     accentBrown: "#A1887F",
+
+    heigh: 60,
+    weight: 60,
   },
 };
