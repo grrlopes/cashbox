@@ -44,7 +44,6 @@ const ListExpenses = () => {
               <View style={styles.itemDescription}>
                 <View>
                   <Image style={styles.itemImage}
-                    // source={require('../../../../assets/images/icons8-bad-banana-96.png')}
                     source={{ uri: 'https://img.icons8.com/plasticine/100/banana.png' }}
                   />
                 </View>
@@ -124,7 +123,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   itemsTotal: {
-    alignSelf: "center"
+    alignSelf: "center",
+    margin: 10,
   },
   itemDescription: {
     flexDirection: "row",

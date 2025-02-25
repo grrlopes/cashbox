@@ -1,12 +1,14 @@
 import FloatBtn from '@/components/button/FloatBtn'
-import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import { Image, Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ListExpenses from './listExpenses'
 import { globalStyles } from '@/helper/theme'
-import Colors from '@/constants/Colors'
+import { getUserInfoByToken } from '@/store/persistor'
+import { useEffect, useState } from 'react'
+import { LogIn } from '@/interfaces/auth'
 
 export default function Home() {
+  const [auth, setAuth] = useState<LogIn | null>(null)
   const handleBtn = () => {
     router.push('/(panel)/createExpense/expense');
   };
@@ -15,7 +17,13 @@ export default function Home() {
     router.push('/(panel)/profile/page');
   }
 
-
+  useEffect(() => {
+    const userInfo = async () => {
+      const info = await getUserInfoByToken();
+      setAuth(info)
+    }
+    userInfo();
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -25,12 +33,11 @@ export default function Home() {
             <View>
               <Image
                 style={styles.profileIcon}
-                // source={require('../../../../assets/images/icons8-customer-96.png')}
                 source={{ uri: 'https://img.icons8.com/plasticine/100/user-menu-male.png' }}
               />
             </View>
             <View style={styles.profile}>
-              <Text style={styles.profileText}>Hi, Name</Text>
+              <Text style={styles.profileText}>Hi, {auth?.name}</Text>
               <Text style={styles.profileText}>Save Money</Text>
             </View>
           </View>
@@ -50,7 +57,6 @@ export default function Home() {
         <Text style={styles.headerText}>Home</Text>
         <Text style={styles.headerText}>{new Date().toLocaleDateString('en-us', { month: "long" })}</Text>
       </View>
-
       <ListExpenses />
       <FloatBtn activeBtn={handleBtn} />
     </SafeAreaView >

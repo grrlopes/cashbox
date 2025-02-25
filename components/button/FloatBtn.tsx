@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
@@ -28,8 +28,8 @@ export default FloatBtn
 const styles = StyleSheet.create({
   plusBtnContainer: {
     position: 'absolute',
-    bottom: 40,
-    right: 20,
+    bottom: 30,
+    right: 50
   },
   plusBtn: {
     width: 50,
