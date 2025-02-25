@@ -36,7 +36,10 @@ const ListExpenses = () => {
     <View style={{ flex: 1 }}>
       <View style={styles.Container}>
         <View style={styles.headerDate}>
-          <Text style={styles.headerDateText}>{item.time.created_at.toString()}</Text>
+          <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { weekday: "long" })},</Text>
+          <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { month: "long" })}</Text>
+          <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { day: "numeric" })},</Text>
+          <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).getFullYear()}</Text>
         </View>
         {item.items.map((item, id) => {
           return (
@@ -86,8 +89,9 @@ const styles = StyleSheet.create({
   },
   // Render styles
   headerDate: {
+    flexDirection: "row",
+    gap: 4,
     alignItems: "center",
-    // backgroundColor: Colors.dark.black,
     backgroundColor: Colors.dark.lightGray,
     padding: 10,
   },
