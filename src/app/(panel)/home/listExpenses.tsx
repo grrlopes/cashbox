@@ -36,17 +36,19 @@ const ListExpenses = () => {
     <View style={{ flex: 1 }}>
       <View style={styles.Container}>
         <View style={styles.headerDate}>
-          <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { weekday: "long" })},</Text>
-          <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { month: "long" })}</Text>
-          <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { day: "numeric" })},</Text>
-          <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).getFullYear()}</Text>
+          <View style={{ flexDirection: "row", alignSelf: "center", gap: 4 }}>
+            <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { weekday: "long" })},</Text>
+            <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { month: "long" })}</Text>
+            <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { day: "numeric" })},</Text>
+            <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).getFullYear()}</Text>
+          </View>
         </View>
         {item.items.map((item, id) => {
           return (
             <View style={[styles.itemContainer, id % 2 === 0 ? styles.evenRow : styles.oddRow]} key={id}>
               <View style={styles.itemDescription}>
-                <View>
-                  <Image style={styles.itemImage}
+                <View >
+                  <Image style={[styles.itemImage]}
                     source={{ uri: 'https://img.icons8.com/plasticine/100/banana.png' }}
                   />
                 </View>
@@ -89,17 +91,25 @@ const styles = StyleSheet.create({
   },
   // Render styles
   headerDate: {
-    flexDirection: "row",
-    gap: 4,
-    alignItems: "center",
     backgroundColor: Colors.dark.lightGray,
     padding: 10,
+
+    marginRight: 5,
+    marginLeft: 5,
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 15,
+    shadowColor: '#000000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 3,
+    elevation: 5,
   },
   headerDateText: {
     fontFamily: globalStyles.text.fontFamily,
     fontWeight: "900",
     fontSize: 15,
-    color: Colors.dark.titlebackground
+    color: Colors.dark.titlebackground,
   },
   itemContainer: {
     flexDirection: "row",
