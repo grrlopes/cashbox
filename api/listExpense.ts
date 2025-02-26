@@ -1,7 +1,6 @@
 import { getUserInfoByToken } from "@/store/persistor";
 import { getDb } from "./dbConn"
-import { validToken } from "./auth";
-import { Expense } from "@/interfaces/expense";
+import { Expense, ExpenseOut } from "@/interfaces/expense";
 
 /**
  * Handles user authentication by validating credentials.
@@ -13,34 +12,45 @@ import { Expense } from "@/interfaces/expense";
  * @param {string | null} params.password - The password of the user (required but can be null).
  */
 
-// type Item = {
-//   description: string;
-//   name: string;
-//   total: string;
-// };
+const ParseExpenses = (expenses: Expense[]): ExpenseOut[] => {
+  return expenses.map(({ id, items, items_icon, user, time }) => ({
+    id,
+    user: {
+      email: user.email,
+      id: user.id,
+      name: user.name,
+      role: user.role,
+      status: user.status
+    },
+    time: {
+      ...time
+    },
+    items: items.map((item, index) => ({
+      ...item,
+      icon: items_icon[index] ? { name: items_icon[index].name, url: items_icon[index].url } : undefined
+    }))
+  }));
+}
 
-// type TimeInfo = {
-//   created_at: string; // Assuming it's an ISO date string
-//   updated_at: string;
-// };
-
-// type Expense = {
-//   id: string; // "expense:<id>" format
-//   items: Item[];
-//   time: TimeInfo;
-// };
-
-export const listAllExpenses = async (): Promise<Array<Expense>> => {
+export const listAllExpenses = async (): Promise<ExpenseOut[]> => {
   try {
     const db = await getDb();
     const token = await getUserInfoByToken();
     await db.authenticate(token?.token!)
 
-    const listAll = await db.select<Expense>('expense')
-    console.log(listAll, "xxxxxxxyyy=0")
-    return listAll
-} catch (e) {
-  console.warn("validToken:", e)
-  return []
-}
+    const query = `
+      SELECT
+        id,
+        items.{description, total, name},
+        items.icon.*.{name, id, url} AS items_icon,
+        user.*,
+        time
+      FROM expense
+    `;
+    const listAll = await db.query<Expense[]>(query);
+    return ParseExpenses(listAll.flat())
+  } catch (e) {
+    console.warn("validToken:", e)
+    return []
+  }
 }

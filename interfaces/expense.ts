@@ -1,15 +1,23 @@
 type Expense = {
   id: string;
-  items: Array<{
-    description: string;
-    name: string;
-    total: string;
-  }>;
+  items: { description: string; total: string, name: string }[];
+  items_icon: { id: string; name: string; url: string }[];
+  user: { email: string, id: string, name: string, role: string, status: string };
   time: {
     created_at: string;
     updated_at: string;
   };
-  user: string;
-}
+};
 
-export { Expense }
+type ExpenseOut = {
+  id: string;
+  user: { email: string, id: string, name: string, role: string, status: string };
+  items: { description: string, total: string, name: string, icon?: { name: string; url: string } }[];
+  time: {
+    created_at: string;
+    updated_at: string;
+  };
+
+};
+
+export { Expense, ExpenseOut }

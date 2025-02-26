@@ -2,13 +2,13 @@ import { ActivityIndicator, FlatList, Image, RefreshControl, StyleSheet, Text, V
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 import { listAllExpenses } from '@/api/listExpense';
-import { Expense } from '@/interfaces/expense';
+import { Expense, ExpenseOut } from '@/interfaces/expense';
 import Colors from '@/constants/Colors';
 import { globalStyles } from '@/helper/theme';
 
 const ListExpenses = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const { data, isLoading, error, refetch } = useQuery<Array<Expense>>({
+  const { data, isLoading, error, refetch } = useQuery<Array<ExpenseOut>>({
     queryKey: ['expense'],
     queryFn: () => listAllExpenses(),
   });
@@ -23,7 +23,6 @@ const ListExpenses = () => {
       setRefreshing(false);
     }
   };
-
   if (isLoading) {
     return <ActivityIndicator
       size={"large"}
@@ -32,7 +31,7 @@ const ListExpenses = () => {
     />;
   }
 
-  const _renderItem = (item: Expense) => (
+  const _renderItem = (item: ExpenseOut) => (
     <View style={{ flex: 1 }}>
       <View style={styles.Container}>
         <View style={styles.headerDate}>
@@ -49,7 +48,8 @@ const ListExpenses = () => {
               <View style={styles.itemDescription}>
                 <View >
                   <Image style={[styles.itemImage]}
-                    source={{ uri: 'https://img.icons8.com/plasticine/100/banana.png' }}
+                    // source={{ uri: 'https://img.icons8.com/plasticine/100/banana.png' }}
+                    source={{ uri: item.icon?.url }}
                   />
                 </View>
                 <View style={styles.items}>
