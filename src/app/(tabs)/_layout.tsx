@@ -1,0 +1,22 @@
+import { globalStyles } from "@/helper/theme";
+import { Stack } from "expo-router";
+import { Image, View } from "react-native";
+
+export default function Layout() {
+  return (
+    <Stack>
+      <Stack.Screen name="icons" options={{
+        headerTransparent: false,
+        headerTitleStyle: { fontFamily: globalStyles.text.fontFamily, fontWeight: 600, fontSize: 14 },
+        headerRight: () => (
+          <View>
+            <Image
+              style={{ height: 50, width: 50 }}
+              source={{ uri: 'https://img.icons8.com/plasticine/100/medium-icons.png' }}
+            />
+          </View>
+        )
+      }} />
+    </Stack>
+  )
+}

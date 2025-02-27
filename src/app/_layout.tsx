@@ -74,6 +74,7 @@ const MainLayout = () => {
           headerTitleStyle: { fontFamily: globalStyles.text.fontFamily, fontSize: 14, fontWeight: 600 }
         }} />
         <Stack.Screen name='(panel)/home/page' options={{ headerShown: false }} />
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
       </Stack >
     </QueryClientProvider>
   )

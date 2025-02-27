@@ -10,7 +10,7 @@ import { LogIn } from '@/interfaces/auth'
 export default function Home() {
   const [auth, setAuth] = useState<LogIn | null>(null)
   const handleBtn = () => {
-    router.push('/(panel)/createIcons/icons');
+    router.push('/icons');
   };
 
   const handleLogoff = () => {
