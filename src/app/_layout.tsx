@@ -1,4 +1,5 @@
 import { validToken } from '@/api/auth'
+import { globalStyles } from '@/helper/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, router } from 'expo-router'
@@ -59,7 +60,6 @@ const MainLayout = () => {
   }, [router]);
 
   return (
-
     <QueryClientProvider client={queryClient}>
       <Stack screenOptions={{ statusBarStyle: 'auto', statusBarTranslucent: false }}>
         <Stack.Screen name='index' options={{ headerShown: false }} />
@@ -67,6 +67,12 @@ const MainLayout = () => {
         <Stack.Screen name='(auth)/signup/page' options={{ headerShown: false }} />
         <Stack.Screen name='(panel)/profile/page' options={{ headerShown: true, headerTransparent: true, headerTitle: "" }} />
         <Stack.Screen name='(panel)/createExpense/expense' options={{ headerShown: true, headerTransparent: true, headerTitle: "" }} />
+        <Stack.Screen name='(panel)/createIcons/icons' options={{
+          headerShown: true,
+          headerTransparent: false,
+          headerTitle: "New icons",
+          headerTitleStyle: { fontFamily: globalStyles.text.fontFamily, fontSize: 14, fontWeight: 600 }
+        }} />
         <Stack.Screen name='(panel)/home/page' options={{ headerShown: false }} />
       </Stack >
     </QueryClientProvider>
