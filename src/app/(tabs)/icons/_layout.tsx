@@ -1,7 +1,5 @@
-import Colors from "@/constants/Colors";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { Stack, Tabs } from "expo-router";
-import { Image, StyleSheet, View } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
 
 export default function Layout() {
   return (
@@ -19,19 +17,11 @@ export default function Layout() {
         headerShown: false, title: "Create",
         tabBarIcon: ({ focused, color, size }) => {
           if (focused) {
-            return <FontAwesome5 name="plus" color={color} size={size} />
+            return <FontAwesome name="plus" color={color} size={size} />
           }
-          return <FontAwesome5 name="plus" color={color} size={size} />
+          return <FontAwesome name="plus" color={color} size={size} />
         }
       }} />
     </Tabs>
   )
 }
-
-const styles = StyleSheet.create({
-  itemImage: {
-    height: 40,
-    width: 40,
-  },
-
-})

@@ -3,13 +3,24 @@ import { View, Text, TextInput, Button, StyleSheet, SafeAreaView } from 'react-n
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { QueryClientProvider, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Icon } from '@/interfaces/icon';
+import { createIcon } from '@/api/icon';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required').max(15, 'Limit of 15 characters'),
-  url: z.string().url('Invalid URL'),
+  url: z.string()//.url('Invalid URL'),
 });
 
 const IconsForm = () => {
+  const client = useQueryClient();
+  const { mutateAsync, isSuccess, status, reset } = useMutation({
+    mutationFn: (iconCreate: Icon) => createIcon(iconCreate),
+    onSuccess: () => {
+      client.invalidateQueries();
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -19,9 +30,10 @@ const IconsForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log('Form submitted:', data);
+  const onSubmit = async (data: any) => {
+    await mutateAsync(data)
   };
+
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -29,8 +41,9 @@ const IconsForm = () => {
         <Text style={styles.label}>Name</Text>
         <TextInput
           style={styles.input}
+          onFocus={reset}
           onChangeText={(text) => setValue('name', text)}
-          {...register('name')}
+          {...register('name').onChange}
         />
         {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
 
@@ -43,6 +56,7 @@ const IconsForm = () => {
         {errors.url && <Text style={styles.error}>{errors.url.message}</Text>}
 
         <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        {!isSuccess ? <View></View> : <View><Text>Successul created</Text></View>}
       </View>
     </SafeAreaView>
   );
