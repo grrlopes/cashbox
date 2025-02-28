@@ -1,5 +1,7 @@
+import { RecordId } from "surrealdb";
+
 type Icon = {
-  id: string,
+  id: RecordId,
   name: string,
   url: string,
   time: {

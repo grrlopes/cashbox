@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -10,11 +10,12 @@ import Colors from '@/constants/Colors';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required').max(15, 'Limit of 15 characters'),
-  url: z.string().url('Invalid URL'),
+  url: z.string()//.url('Invalid URL'),
 });
 
 const IconsForm = () => {
   const client = useQueryClient();
+  const [box, setBox] = useState("")
   const { mutateAsync, isSuccess, reset } = useMutation({
     mutationFn: (iconCreate: Icon) => createIcon(iconCreate),
     onSuccess: () => {
@@ -51,8 +52,7 @@ const IconsForm = () => {
           <TextInput
             placeholder='Type icon name...'
             style={styles.input}
-            returnKeyType='next'
-            onFocus={reset}
+            onFocus={() => reset()}
             onChangeText={(text) => setValue('name', text)}
             {...register('name').onChange}
           />
@@ -64,7 +64,7 @@ const IconsForm = () => {
           <TextInput
             placeholder='Type url...'
             style={styles.input}
-            returnKeyType='next'
+            onFocus={() => reset()}
             onChangeText={(text) => setValue('url', text)}
             {...register('url')}
           />
