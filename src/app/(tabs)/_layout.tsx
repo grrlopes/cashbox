@@ -1,3 +1,4 @@
+import iconUrl from "@/constants/IconUrl";
 import { globalStyles } from "@/helper/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
@@ -22,7 +23,7 @@ export default function Layout() {
             <View>
               <Image
                 style={{ height: 50, width: 50 }}
-                source={{ uri: 'https://img.icons8.com/plasticine/100/medium-icons.png' }}
+                source={{ uri: iconUrl.icons }}
               />
             </View>
           )

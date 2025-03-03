@@ -48,7 +48,6 @@ const ListExpenses = () => {
               <View style={styles.itemDescription}>
                 <View >
                   <Image style={[styles.itemImage]}
-                    // source={{ uri: 'https://img.icons8.com/plasticine/100/banana.png' }}
                     source={{ uri: item.icon?.url }}
                   />
                 </View>

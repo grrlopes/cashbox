@@ -6,6 +6,7 @@ import { globalStyles } from '@/helper/theme'
 import { getUserInfoByToken } from '@/store/persistor'
 import { useEffect, useState } from 'react'
 import { LogIn } from '@/interfaces/auth'
+import iconUrl from '@/constants/IconUrl'
 
 export default function Home() {
   const [auth, setAuth] = useState<LogIn | null>(null)
@@ -37,7 +38,7 @@ export default function Home() {
             <View>
               <Image
                 style={styles.profileIcon}
-                source={{ uri: 'https://img.icons8.com/plasticine/100/user-menu-male.png' }}
+                source={{ uri: iconUrl.userMenu }}
               />
             </View>
             <View style={styles.profile}>
@@ -51,7 +52,7 @@ export default function Home() {
             <View>
               <Image
                 style={styles.profileIcon}
-                source={{ uri: 'https://img.icons8.com/plasticine/100/general-ledger.png' }}
+                source={{ uri: iconUrl.ledger }}
               />
             </View>
           </Pressable>
