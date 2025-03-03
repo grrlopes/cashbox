@@ -2,9 +2,9 @@ import { DbConfig } from "@/interfaces/dbConfig";
 import Surreal from "surrealdb";
 
 const DEFAULT_CONFIG: DbConfig = {
-  url: "",
-  namespace: "",
-  database: "",
+  url: "https://local-069uqbqg35qd96ifkunc6bu0us.aws-use1.surreal.cloud/rpc",
+  namespace: "personal",
+  database: "cashbox",
 };
 
 export const getDb = async (): Promise<Surreal> => {
