@@ -43,7 +43,7 @@ export default function Home() {
             </View>
             <View style={styles.profile}>
               <Text style={styles.profileText}>Hi, {auth?.name}</Text>
-              <Text style={styles.profileText}>Save Money</Text>
+              <Text style={styles.profileText}>Save Moneyy</Text>
             </View>
           </View>
         </TouchableOpacity>

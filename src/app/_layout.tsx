@@ -62,7 +62,7 @@ const MainLayout = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ statusBarStyle: 'auto', statusBarTranslucent: false }}>
+      <Stack screenOptions={{ statusBarStyle: 'auto', statusBarTranslucent: false, statusBarBackgroundColor: "auto" }}>
         <Stack.Screen name='index' options={{ headerShown: false }} />
         <Stack.Screen name='(auth)/signin/page' options={{ headerShown: false }} />
         <Stack.Screen name='(auth)/signup/page' options={{ headerShown: false }} />
