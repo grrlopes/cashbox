@@ -66,7 +66,7 @@ const MainLayout = () => {
         <Stack.Screen name='index' options={{ headerShown: false }} />
         <Stack.Screen name='(auth)/signin/page' options={{ headerShown: false }} />
         <Stack.Screen name='(auth)/signup/page' options={{ headerShown: false }} />
-        <Stack.Screen name='(panel)/profile/page' options={{ headerShown: true, headerTransparent: true, headerTitle: "" }} />
+        <Stack.Screen name='(panel)/profile/page' options={{ headerShown: true, headerTransparent: false, headerTitle: "" }} />
         <Stack.Screen name='(panel)/createExpense/expense' options={{ headerShown: true, headerTransparent: true, headerTitle: "" }} />
         <Stack.Screen name='(panel)/createIcons/icons' options={{
           headerShown: true,

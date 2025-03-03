@@ -1,7 +1,9 @@
 import Colors from '@/constants/Colors'
+import iconUrl from '@/constants/IconUrl';
+import { globalStyles } from '@/helper/theme';
 import { removeUserToken } from '@/store/persistor'
 import { router } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 export default function Profile() {
   const handleLogoff = async () => {
@@ -11,11 +13,27 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <Text>Profile paged</Text>
-      <Text>Logoff</Text>
-      <TouchableOpacity style={styles.button} onPress={handleLogoff}>
-        <Text style={styles.buttonText}>Logoff</Text>
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <Image
+          style={styles.profileImg}
+          source={{ uri: iconUrl.user }}
+        />
+      </View>
+
+      <View style={styles.content}>
+        <View style={styles.account}>
+          <Text style={styles.myaccount}>My Account</Text>
+        </View>
+        <View style={styles.accountAction}>
+          <Text style={styles.edit_password}>Edit Profile</Text>
+          <Text style={styles.edit_password}>Change Password</Text>
+        </View>
+      </View>
+      <View style={styles.logout}>
+        <TouchableOpacity onPress={handleLogoff}>
+          <Text style={styles.push_logout}>Logout</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -23,20 +41,56 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 10,
+    backgroundColor: Colors.dark.background,
   },
-  button: {
-    backgroundColor: Colors.dark.accentGreen,
-    paddingTop: 14,
-    paddingBottom: 14,
-    alignItems: 'center',
-    width: '100%',
-    borderRadius: 8,
+  header: {
+    alignSelf: "center",
+    paddingBottom: 10
   },
-  buttonText: {
-    color: Colors.dark.white,
-    fontWeight: 'bold',
+  content: {
+    flex: 1,
+    backgroundColor: Colors.dark.white,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingTop: 10,
   },
-
+  account: {
+    borderWidth: 0.1,
+    backgroundColor: Colors.dark.lightGray,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    padding: 10,
+  },
+  accountAction: {
+    backgroundColor: Colors.dark.lighterGray,
+    padding: 15,
+    gap: 15,
+  },
+  myaccount: {
+    fontFamily: globalStyles.text.fontFamily,
+    fontWeight: "600",
+    fontSize: 14,
+  },
+  edit_password: {
+    fontFamily: globalStyles.text.fontFamily,
+    fontWeight: "500",
+    fontSize: 15,
+  },
+  profileImg: {
+    height: 100,
+    width: 100,
+    backgroundColor: Colors.dark.lighterGray,
+    borderRadius: 50,
+  },
+  logout: {
+    backgroundColor: Colors.dark.lightGray,
+    alignItems: "center",
+    padding: 20,
+  },
+  push_logout: {
+    fontFamily: globalStyles.text.fontFamily,
+    fontWeight: "500",
+    fontSize: 15,
+  }
 })
