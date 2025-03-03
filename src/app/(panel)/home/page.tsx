@@ -13,6 +13,10 @@ export default function Home() {
     router.push('/icons');
   };
 
+  const handleLedger = () => {
+    router.push('/ledger/ledger');
+  };
+
   const handleLogoff = () => {
     router.push('/(panel)/profile/page');
   }
@@ -43,7 +47,7 @@ export default function Home() {
           </View>
         </TouchableOpacity>
         <View>
-          <Pressable onPress={handleBtn}>
+          <Pressable onPress={handleLedger}>
             <View>
               <Image
                 style={styles.profileIcon}

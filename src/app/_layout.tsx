@@ -51,6 +51,7 @@ const MainLayout = () => {
       const logged = await validToken();
       if (logged) {
         router.replace('/(panel)/home/page');
+        // router.replace('/(panel)/ledger/ledger');
       } else {
         router.replace('/(auth)/signin/page');
       }
@@ -75,6 +76,7 @@ const MainLayout = () => {
         }} />
         <Stack.Screen name='(panel)/home/page' options={{ headerShown: false }} />
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        <Stack.Screen name='(panel)/ledger/ledger' options={{ headerShown: true, headerTransparent: false, headerTitle: "" }} />
       </Stack >
     </QueryClientProvider>
   )
