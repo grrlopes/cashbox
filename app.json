@@ -4,12 +4,12 @@
     "slug": "cashbox",
     "version": "1.0.5",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/cashbox_icon_512x512.png",
     "scheme": "cashbox",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/splash-icon.png",
+      "image": "./assets/images/cashbox_background.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,7 +19,7 @@
     "android": {
       "versionCode": 5,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/cashbox_foreground.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.glopes.cashbox"
