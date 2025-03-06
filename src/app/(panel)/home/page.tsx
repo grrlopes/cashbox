@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   const handleLedger = () => {
-    router.push('/ledger/ledger');
+    router.push('/(panel)/createExpense/expense');
   };
 
   const handleLogoff = () => {

@@ -42,7 +42,7 @@ const IconsForm = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.logoText}>
-          Icons <Text style={{ color: Colors.dark.borderDark }}>In</Text>
+          Create <Text style={{ color: Colors.dark.borderDark }}>Icons</Text>
         </Text>
       </View>
 

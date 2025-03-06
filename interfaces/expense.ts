@@ -1,3 +1,5 @@
+import { RecordId } from "surrealdb";
+
 type Expense = {
   id: string;
   items: { description: string; total: string, name: string }[];
@@ -20,4 +22,11 @@ type ExpenseOut = {
 
 };
 
-export { Expense, ExpenseOut }
+type ExpenseCreate = {
+  description: string;
+  total: string;
+  name: string;
+  icon: RecordId;
+}
+
+export { ExpenseCreate, Expense, ExpenseOut }

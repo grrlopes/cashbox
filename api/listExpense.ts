@@ -1,6 +1,7 @@
 import { getUserInfoByToken } from "@/store/persistor";
 import { getDb } from "./dbConn"
-import { Expense, ExpenseOut } from "@/interfaces/expense";
+import { Expense, ExpenseCreate, ExpenseOut } from "@/interfaces/expense";
+import { RecordId } from "surrealdb";
 
 /**
  * Handles user authentication by validating credentials.
@@ -52,5 +53,30 @@ export const listAllExpenses = async (): Promise<ExpenseOut[]> => {
   } catch (e) {
     console.warn("validToken:", e)
     return []
+  }
+}
+
+export const partialCreate = async (data: ExpenseCreate): Promise<any> => {
+  try {
+    const db = await getDb();
+    const token = await getUserInfoByToken();
+    await db.authenticate(token?.token!);
+
+    const id = new RecordId('expense', '3ztblm8n8w5f146l25xe');
+    console.log(id)
+    const newItem: ExpenseCreate = {
+      name: data.name,
+      description: data.description,
+      total: data.total,
+      icon: new RecordId('icon', 'hilqprt4v8qgc8355e3z')
+    };
+    const query = `
+      UPSERT expense SET items = array::push(items, $item) WHERE id = $id
+    `;
+    const result = await db.query<[ExpenseCreate]>(query, { item: newItem, id: id });
+    return result;
+  } catch (e) {
+    console.warn("validToken:", e)
+    return
   }
 }

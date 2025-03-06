@@ -1,9 +1,11 @@
 import { validToken } from '@/api/auth'
+import iconUrl from '@/constants/IconUrl';
 import { globalStyles } from '@/helper/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, router } from 'expo-router'
 import { useEffect } from 'react'
+import { Image, View } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -67,7 +69,19 @@ const MainLayout = () => {
         <Stack.Screen name='(auth)/signin/page' options={{ headerShown: false }} />
         <Stack.Screen name='(auth)/signup/page' options={{ headerShown: false }} />
         <Stack.Screen name='(panel)/profile/page' options={{ headerShown: true, headerTransparent: false, headerTitle: "" }} />
-        <Stack.Screen name='(panel)/createExpense/expense' options={{ headerShown: true, headerTransparent: true, headerTitle: "" }} />
+        <Stack.Screen name='(panel)/createExpense/expense' options={{
+          headerShown: true,
+          headerTransparent: false,
+          headerTitle: "expense",
+          headerRight: () => (
+            <View>
+              <Image
+                style={{ height: 50, width: 50 }}
+                source={{ uri: iconUrl.expense }}
+              />
+            </View>
+          )
+        }} />
         <Stack.Screen name='(panel)/createIcons/icons' options={{
           headerShown: true,
           headerTransparent: false,
@@ -78,6 +92,6 @@ const MainLayout = () => {
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
         <Stack.Screen name='(panel)/ledger/ledger' options={{ headerShown: true, headerTransparent: false, headerTitle: "" }} />
       </Stack >
-    </QueryClientProvider>
+    </QueryClientProvider >
   )
 }
