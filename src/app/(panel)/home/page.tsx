@@ -1,12 +1,13 @@
 import FloatBtn from '@/components/button/FloatBtn'
 import { router } from 'expo-router'
-import { Image, Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Pressable, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ListExpenses from './listExpenses'
 import { globalStyles } from '@/helper/theme'
 import { getUserInfoByToken } from '@/store/persistor'
 import { useEffect, useState } from 'react'
 import { LogIn } from '@/interfaces/auth'
 import iconUrl from '@/constants/IconUrl'
+import Colors from '@/constants/Colors'
 
 export default function Home() {
   const [auth, setAuth] = useState<LogIn | null>(null)
@@ -32,6 +33,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <View style={styles.status}>
         <TouchableOpacity onPress={handleLogoff}>
           <View style={styles.profileContainer}>
@@ -43,7 +45,7 @@ export default function Home() {
             </View>
             <View style={styles.profile}>
               <Text style={styles.profileText}>Hi, {auth?.name}</Text>
-              <Text style={styles.profileText}>Save Moneyy</Text>
+              <Text style={styles.profileText}>Save Money</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -71,11 +73,12 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.dark.white,
   },
   status: {
     flexDirection: "row",
     margin: 5,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   profileContainer: {
     flexDirection: "row",
@@ -104,5 +107,4 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 14,
   },
-
-})
+});
