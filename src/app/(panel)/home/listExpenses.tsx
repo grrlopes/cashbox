@@ -1,7 +1,7 @@
 import { ActivityIndicator, FlatList, Image, RefreshControl, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
-import { listAllExpenses } from '@/api/listExpense';
+import { getCurrentMonthExpense } from '@/api/listExpense';
 import { ExpenseOut } from '@/interfaces/expense';
 import Colors from '@/constants/Colors';
 import { globalStyles } from '@/helper/theme';
@@ -10,7 +10,7 @@ const ListExpenses = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const { data, isLoading, error, refetch } = useQuery<Array<ExpenseOut>>({
     queryKey: ['expense'],
-    queryFn: () => listAllExpenses(),
+    queryFn: () => getCurrentMonthExpense(),
   });
 
   const onRefresh = async () => {

@@ -32,6 +32,31 @@ const ParseExpenses = (expenses: Expense[]): ExpenseOut[] => {
   }));
 }
 
+export const getCurrentMonthExpense = async (): Promise<ExpenseOut[]> => {
+  try {
+    const db = await getDb();
+    const token = await getUserInfoByToken();
+    await db.authenticate(token?.token!)
+    const expenseId = await getIdByCurrentDate();
+
+    const query = `
+      SELECT
+        id,
+        items.{description, total, name},
+        items.icon.*.{name, id, url} AS items_icon,
+        user.*,
+        time
+      FROM expense WHERE id = $id
+    `;
+
+    const listAll = await db.query<Expense[]>(query, { id: expenseId });
+    return ParseExpenses(listAll.flat())
+  } catch (e) {
+    console.warn("getCurrentMonthExpense:", e)
+    return []
+  }
+};
+
 export const listAllExpenses = async (): Promise<ExpenseOut[]> => {
   try {
     const db = await getDb();
@@ -83,7 +108,7 @@ export const partialCreate = async (data: ExpenseCreate): Promise<any> => {
     const result = await db.query<[ExpenseCreate]>(query, { item: newItem, id: newItem.id });
     return result;
   } catch (e) {
-    console.warn("validToken:", e)
+    console.warn("partialCreate:", e)
     return
   }
 };
@@ -98,8 +123,8 @@ export const getIdByCurrentDate = async (): Promise<string> => {
     const year = dates.getFullYear();
     const month = dates.getMonth();
 
-    const startDate = `${year}-${String(month).padStart(2, '0')}-01T00:00:00Z`
-    const endDate = new Date(year, month, 1).toISOString();
+    const startDate = `${year}-${String(month + 1).padStart(2, '0')}-01T00:00:00Z`
+    const endDate = new Date(year, month + 1, 1).toISOString();
 
     const query = `
       SELECT
@@ -112,7 +137,7 @@ export const getIdByCurrentDate = async (): Promise<string> => {
     const res = result[0] as { id: string };
     return res.id;
   } catch (e) {
-    console.warn("validToken:", e)
+    console.warn("getIdByCurrentDate:", e)
     return ""
   }
 }
