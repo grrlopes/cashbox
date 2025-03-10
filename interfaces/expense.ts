@@ -23,10 +23,11 @@ type ExpenseOut = {
 };
 
 type ExpenseCreate = {
-  description: string;
-  total: string;
-  name: string;
-  icon: RecordId;
+  id: string,
+  description: string,
+  total: string,
+  name: string,
+  icon: RecordId,
 }
 
 export { ExpenseCreate, Expense, ExpenseOut }

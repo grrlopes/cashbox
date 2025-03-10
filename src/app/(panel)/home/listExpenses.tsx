@@ -2,7 +2,7 @@ import { ActivityIndicator, FlatList, Image, RefreshControl, StyleSheet, Text, V
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 import { listAllExpenses } from '@/api/listExpense';
-import { Expense, ExpenseOut } from '@/interfaces/expense';
+import { ExpenseOut } from '@/interfaces/expense';
 import Colors from '@/constants/Colors';
 import { globalStyles } from '@/helper/theme';
 

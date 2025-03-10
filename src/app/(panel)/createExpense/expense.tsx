@@ -4,10 +4,12 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Colors from '@/constants/Colors';
-import { partialCreate } from '@/api/listExpense';
+import { getIdByCurrentDate, partialCreate } from '@/api/listExpense';
 import { ExpenseCreate } from '@/interfaces/expense';
+import { StringRecordId } from 'surrealdb';
 
 const schema = z.object({
+  id: z.string(),
   name: z.string().min(1, 'Name is required').max(15, 'Limit of 15 characters'),
   description: z.string(),
   total: z.string(),
@@ -30,10 +32,12 @@ const CreateExpenses = () => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { name: '', total: '', description: '', icon: '' },
+    defaultValues: { id: '', name: '', total: '', description: '', icon: '' },
   });
 
   const onSubmit = async (data: any) => {
+    const expenseId = await getIdByCurrentDate()
+    data.id = new StringRecordId(expenseId);
     await mutateAsync(data);
   };
 

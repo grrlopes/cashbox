@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, router } from 'expo-router'
 import { useEffect } from 'react'
-import { Image, StatusBar, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
