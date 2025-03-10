@@ -1,7 +1,7 @@
 import { ActivityIndicator, FlatList, Image, RefreshControl, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
-import { getCurrentMonthExpense } from '@/api/listExpense';
+import { getCurrentMonthExpense } from '@/api/expense';
 import { ExpenseOut } from '@/interfaces/expense';
 import Colors from '@/constants/Colors';
 import { globalStyles } from '@/helper/theme';

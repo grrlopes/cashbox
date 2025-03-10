@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Colors from '@/constants/Colors';
-import { getIdByCurrentDate, partialCreate } from '@/api/listExpense';
+import { getIdByCurrentDate, partialCreate } from '@/api/expense';
 import { ExpenseCreate } from '@/interfaces/expense';
 import { StringRecordId } from 'surrealdb';
 

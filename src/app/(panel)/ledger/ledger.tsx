@@ -2,7 +2,7 @@ import { ActivityIndicator, FlatList, RefreshControl, StyleSheet } from 'react-n
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 import { ExpenseOut } from '@/interfaces/expense';
-import { listAllExpenses } from '@/api/listExpense';
+import { listAllExpenses } from '@/api/expense';
 import ListLedger from '@/components/ListLedger';
 
 const ledger = () => {
