@@ -7,6 +7,7 @@ import Colors from '@/constants/Colors';
 import { getIdByCurrentDate, partialCreate } from '@/api/expense';
 import { ExpenseCreate } from '@/interfaces/expense';
 import { StringRecordId } from 'surrealdb';
+import DropdownIcon from '@/components/input/DropDownIcon';
 
 const schema = z.object({
   id: z.string(),
@@ -40,6 +41,10 @@ const CreateExpenses = () => {
     data.id = new StringRecordId(expenseId);
     await mutateAsync(data);
   };
+
+  const getDropDownValue = (data: string): void => {
+    setValue('icon', data)
+  }
 
   return (
     <View style={styles.container}>
@@ -85,6 +90,8 @@ const CreateExpenses = () => {
           />
           {errors.total && <Text style={styles.error}>{errors.total.message}</Text>}
         </View>
+
+        <DropdownIcon getValues={getDropDownValue} />
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttonText}>Create</Text>

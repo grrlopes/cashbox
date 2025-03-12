@@ -1,7 +1,7 @@
 import { getUserInfoByToken } from "@/store/persistor";
 import { getDb } from "./dbConn"
 import { Expense, ExpenseCreate, ExpenseOut } from "@/interfaces/expense";
-import { RecordId } from "surrealdb";
+import { RecordId, StringRecordId } from "surrealdb";
 
 /**
  * Handles user authentication by validating credentials.
@@ -97,7 +97,7 @@ export const partialCreate = async (data: ExpenseCreate): Promise<any> => {
       name: data.name,
       description: data.description,
       total: data.total,
-      icon: new RecordId('icon', 'r6837i0u0v37za23iko6'),
+      icon: new StringRecordId(data.icon),
       id: data.id
     };
 

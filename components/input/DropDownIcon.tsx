@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -8,12 +8,20 @@ import { ListAllIcon } from '@/api/icon';
 import Colors from '@/constants/Colors';
 import { globalStyles } from '@/helper/theme';
 
-const DropdownIcon = () => {
+interface Props {
+  getValues(data: string): void;
+}
+
+const DropdownIcon: FC<Props> = (props: Props) => {
   const [value, setValue] = useState<Icon>();
   const { data, isLoading, refetch } = useQuery<Array<Icon>>({
     queryKey: ['dropdown'],
     queryFn: () => ListAllIcon(),
   });
+
+  const iconValues = (data: string): void => {
+    props.getValues(data)
+  }
 
   if (isLoading) return <ActivityIndicator size="large" color="blue" />;
 
@@ -28,14 +36,13 @@ const DropdownIcon = () => {
       search={true}
       maxHeight={300}
       labelField="name"
-      valueField="name"
+      valueField="id"
       placeholder="Select icon"
       searchPlaceholder="Search..."
       value={value}
       onChange={(item: Icon) => {
-        setValue({
-          ...item
-        });
+        setValue(item);
+        iconValues(item.id.toString());
       }}
       renderLeftIcon={() => (
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />

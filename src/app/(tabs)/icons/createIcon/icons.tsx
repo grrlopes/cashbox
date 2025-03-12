@@ -7,8 +7,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Icon } from '@/interfaces/icon';
 import { createIcon } from '@/api/icon';
 import Colors from '@/constants/Colors';
-import DropdownComponent from 'react-native-element-dropdown/lib/typescript/components/Dropdown';
-import DropdownIcon from '@/components/input/DropDownIcon';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required').max(15, 'Limit of 15 characters'),
@@ -17,7 +15,6 @@ const schema = z.object({
 
 const IconsForm = () => {
   const client = useQueryClient();
-  const [box, setBox] = useState("")
   const { mutateAsync, isSuccess, reset } = useMutation({
     mutationFn: (iconCreate: Icon) => createIcon(iconCreate),
     onSuccess: () => {
@@ -72,8 +69,6 @@ const IconsForm = () => {
           />
           {errors.url && <Text style={styles.error}>{errors.url.message}</Text>}
         </View>
-
-        <DropdownIcon />
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttonText}>Create</Text>

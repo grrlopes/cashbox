@@ -1,4 +1,4 @@
-import { RecordId } from "surrealdb";
+import { RecordId, StringRecordId } from "surrealdb";
 
 type Expense = {
   id: string;
@@ -27,7 +27,7 @@ type ExpenseCreate = {
   description: string,
   total: string,
   name: string,
-  icon: RecordId,
+  icon: StringRecordId,
 }
 
 export { ExpenseCreate, Expense, ExpenseOut }
