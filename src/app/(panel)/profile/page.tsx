@@ -9,7 +9,11 @@ export default function Profile() {
   const handleLogoff = async () => {
     await removeUserToken();
     router.replace("/signin/page");
-  }
+  };
+
+  const handleNewIcon = async () => {
+    router.replace("/icons");
+  };
 
   return (
     <View style={styles.container}>
@@ -22,11 +26,20 @@ export default function Profile() {
 
       <View style={styles.content}>
         <View style={styles.account}>
-          <Text style={styles.myaccount}>My Account</Text>
+          <Text style={styles.headrSection}>My Account</Text>
         </View>
-        <View style={styles.accountAction}>
+        <View style={styles.sections}>
           <Text style={styles.edit_password}>Edit Profile</Text>
           <Text style={styles.edit_password}>Change Password</Text>
+        </View>
+
+        <View style={styles.account}>
+          <Text style={styles.headrSection}>Settings</Text>
+        </View>
+        <View style={styles.sections}>
+          <TouchableOpacity onPress={handleNewIcon}>
+            <Text style={styles.edit_password}>New icons</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.logout}>
@@ -62,12 +75,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     padding: 10,
   },
-  accountAction: {
+  sections: {
     backgroundColor: Colors.dark.lighterGray,
     padding: 15,
     gap: 15,
   },
-  myaccount: {
+  headrSection: {
     fontFamily: globalStyles.text.fontFamily,
     fontWeight: "600",
     fontSize: 14,

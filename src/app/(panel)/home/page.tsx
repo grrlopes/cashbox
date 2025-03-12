@@ -12,11 +12,11 @@ import Colors from '@/constants/Colors'
 export default function Home() {
   const [auth, setAuth] = useState<LogIn | null>(null)
   const handleBtn = () => {
-    router.push('/icons');
+    router.push('/(panel)/createExpense/expense');
   };
 
   const handleLedger = () => {
-    router.push('/(panel)/createExpense/expense');
+    router.push('/(panel)/ledger/ledger');
   };
 
   const handleLogoff = () => {

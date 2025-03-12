@@ -34,7 +34,7 @@ const DropdownIcon: FC<Props> = (props: Props) => {
       iconStyle={styles.iconStyle}
       data={data!}
       search={true}
-      maxHeight={300}
+      maxHeight={400}
       labelField="name"
       valueField="id"
       placeholder="Select icon"

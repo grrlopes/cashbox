@@ -55,6 +55,8 @@ const CreateExpenses = () => {
       </View>
 
       <View style={styles.form}>
+        <DropdownIcon getValues={getDropDownValue} />
+
         <View>
           <Text style={styles.label}>Name</Text>
           <TextInput
@@ -90,8 +92,6 @@ const CreateExpenses = () => {
           />
           {errors.total && <Text style={styles.error}>{errors.total.message}</Text>}
         </View>
-
-        <DropdownIcon getValues={getDropDownValue} />
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttonText}>Create</Text>

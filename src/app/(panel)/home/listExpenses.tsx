@@ -8,7 +8,7 @@ import { globalStyles } from '@/helper/theme';
 
 const ListExpenses = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const { data, isLoading, error, refetch } = useQuery<Array<ExpenseOut>>({
+  const { data, isLoading, refetch } = useQuery<Array<ExpenseOut>>({
     queryKey: ['expense'],
     queryFn: () => getCurrentMonthExpense(),
   });
