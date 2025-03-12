@@ -82,12 +82,6 @@ const MainLayout = () => {
             </View>
           )
         }} />
-        <Stack.Screen name='(panel)/createIcons/icons' options={{
-          headerShown: true,
-          headerTransparent: false,
-          headerTitle: "New icons",
-          headerTitleStyle: { fontFamily: globalStyles.text.fontFamily, fontSize: 14, fontWeight: 600 }
-        }} />
         <Stack.Screen name='(panel)/home/page' options={{ headerShown: false }} />
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
         <Stack.Screen name='(panel)/ledger/ledger' options={{ headerShown: true, headerTransparent: false, headerTitle: "" }} />
