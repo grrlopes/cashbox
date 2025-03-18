@@ -1,9 +1,10 @@
-import { ActivityIndicator, FlatList, RefreshControl, StyleSheet } from 'react-native'
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 import { ExpenseOut } from '@/interfaces/expense';
 import { listAllExpenses } from '@/api/expense';
-import ListLedger from '@/components/ListLedger';
+import ListLedger from './listLedger';
+import Colors from '@/constants/Colors';
 
 const ledger = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -32,20 +33,31 @@ const ledger = () => {
   }
 
   return (
-    <FlatList
-      showsVerticalScrollIndicator={false}
-      data={data}
-      numColumns={2}
-      renderItem={({ item }) => ListLedger(item)}
-      keyExtractor={(item) => item.id.toString()}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }
-    />
+    <View style={styles.container}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={data}
+        numColumns={1}
+        horizontal={false}
+        renderItem={({ item, index }) => <ListLedger item={item} count={index} />}
+        keyExtractor={(item) => item.id.toString()}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      />
+    </View>
   )
 }
 
 export default ledger
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 55,
+    backgroundColor: Colors.dark.lighterGray,
+  },
+})

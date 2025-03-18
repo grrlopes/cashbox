@@ -84,7 +84,17 @@ const MainLayout = () => {
         }} />
         <Stack.Screen name='(panel)/home/page' options={{ headerShown: false }} />
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-        <Stack.Screen name='(panel)/ledger/ledger' options={{ headerShown: true, headerTransparent: false, headerTitle: "" }} />
+        <Stack.Screen name='(panel)/ledger/ledger' options={{
+          headerShown: true,
+          headerTransparent: true,
+          headerTitle: "ddd",
+          headerStyle: { backgroundColor: "green" }
+        }} />
+        <Stack.Screen name='(panel)/ledger/[detailLedger]' options={{
+          headerShown: true,
+          headerTitle: "Detail",
+        }} />
+
       </Stack >
     </QueryClientProvider >
   )
