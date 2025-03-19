@@ -1,4 +1,4 @@
-import { RecordId, StringRecordId } from "surrealdb";
+import { StringRecordId } from "surrealdb";
 
 type Expense = {
   id: string;

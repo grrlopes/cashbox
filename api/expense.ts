@@ -63,8 +63,8 @@ export const listAllExpenses = async (): Promise<ExpenseOut[]> => {
     const token = await getUserInfoByToken();
     await db.authenticate(token?.token!)
 
-    const startDate = `${2025}-${String(2).padStart(2, '0')}-01T00:00:00Z`
-    const endDate = new Date(2025, 3, 1).toISOString();
+    const startDate = `${2025}-${String(1).padStart(2, '0')}-01T00:00:00Z`
+    const endDate = new Date(2028, 12, 1).toISOString();
 
     const query = `
       SELECT

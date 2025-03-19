@@ -8,7 +8,7 @@ import Colors from '@/constants/Colors';
 
 const ledger = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const { data, isLoading, error, refetch } = useQuery<Array<ExpenseOut>>({
+  const { data, isLoading, refetch } = useQuery<Array<ExpenseOut>>({
     queryKey: ['ledger'],
     queryFn: () => listAllExpenses(),
   });

@@ -1,18 +1,16 @@
 import { ActivityIndicator, FlatList, RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import { ExpenseItemOut, ExpenseOut } from '@/interfaces/expense';
+import { ExpenseItemOut } from '@/interfaces/expense';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getExpenseById } from '@/api/expense';
 import { StringRecordId } from 'surrealdb';
 
-type Props = Omit<ExpenseOut, "user" | "id">
-
 const DetailLedger = () => {
   const { detailLedger } = useLocalSearchParams();
   const dateparse = new Date()
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const { data, isLoading, error, refetch } = useQuery<ExpenseItemOut>({
+  const { data, isLoading, refetch } = useQuery<ExpenseItemOut>({
     queryKey: ['detailLedger'],
     queryFn: () => getExpenseById(new StringRecordId(detailLedger.toString())),
   });
