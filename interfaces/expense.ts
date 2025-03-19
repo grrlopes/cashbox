@@ -19,8 +19,12 @@ type ExpenseOut = {
     created_at: string;
     updated_at: string;
   };
-
 };
+
+type ExpenseItemOut = {
+  id: string;
+  items: { description: string, total: string, name: string, icon?: { name: string; url: string } }[];
+}
 
 type ExpenseCreate = {
   id: string,
@@ -30,4 +34,4 @@ type ExpenseCreate = {
   icon: StringRecordId,
 }
 
-export { ExpenseCreate, Expense, ExpenseOut }
+export { ExpenseCreate, Expense, ExpenseOut, ExpenseItemOut }

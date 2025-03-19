@@ -1,7 +1,7 @@
 import { getUserInfoByToken } from "@/store/persistor";
 import { getDb } from "./dbConn"
-import { Expense, ExpenseCreate, ExpenseOut } from "@/interfaces/expense";
-import { RecordId, StringRecordId } from "surrealdb";
+import { Expense, ExpenseCreate, ExpenseItemOut, ExpenseOut } from "@/interfaces/expense";
+import { StringRecordId } from "surrealdb";
 
 /**
  * Handles user authentication by validating credentials.
@@ -139,5 +139,23 @@ export const getIdByCurrentDate = async (): Promise<string> => {
   } catch (e) {
     console.warn("getIdByCurrentDate:", e)
     return ""
+  }
+};
+
+export const getExpenseById = async (id: StringRecordId): Promise<ExpenseItemOut> => {
+  try {
+    const db = await getDb();
+    const token = await getUserInfoByToken();
+    await db.authenticate(token?.token!)
+
+    const items = await db.select<ExpenseItemOut>(new StringRecordId(id));
+    return items;
+  } catch (e) {
+    console.warn("getExpenseById:", e)
+    const res: ExpenseItemOut = {
+      id: "",
+      items: []
+    }
+    return res
   }
 }

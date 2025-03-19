@@ -1,28 +1,91 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { ExpenseOut } from '@/interfaces/expense';
+import { ActivityIndicator, FlatList, RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { ExpenseItemOut, ExpenseOut } from '@/interfaces/expense';
 import { useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getExpenseById } from '@/api/expense';
+import { StringRecordId } from 'surrealdb';
 
 type Props = Omit<ExpenseOut, "user" | "id">
 
 const DetailLedger = () => {
   const { detailLedger } = useLocalSearchParams();
   const dateparse = new Date()
-  return (
-    <View style={styles().container}>
-      <View style={styles(true).cardCount}>
-        <Text>{2 + 2}</Text>
-      </View>
-      <View style={styles().cardSize}>
-        <Text style={{ fontWeight: "600" }}>{"fdsfsd"}</Text>
-      </View>
-      <View style={styles().cardTime}>
-        <Text>
-          {dateparse.getHours()}:{dateparse.getMinutes()}
-          {dateparse.getHours() < 12 ? " am" : " pm"}
-        </Text>
-      </View>
-    </View>
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const { data, isLoading, error, refetch } = useQuery<ExpenseItemOut>({
+    queryKey: ['detailLedger'],
+    queryFn: () => getExpenseById(new StringRecordId(detailLedger.toString())),
+  });
+  useEffect(() => {
+
+  }, [refetch()])
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refetch();
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  if (isLoading) {
+    return <ActivityIndicator
+      size={"large"}
+      color={"#000000"}
+      style={{ flex: 1, alignItems: "center", backgroundColor: "#E0E0E0" }}
+    />;
+  };
+
+  const render = (data: ExpenseItemOut) => (
+    <SafeAreaView style={{
+      flex: 1,
+    }}>
+      {data.items.map((item, count) => {
+        return (
+          <View style={styles().container} key={count}>
+            <View style={styles(true).cardCount}>
+              <Text>{count + 1}</Text>
+            </View>
+            <View style={styles().cardSize}>
+              <Text style={{ fontWeight: "600" }}>{item.name}</Text>
+            </View>
+            <View style={styles().cardTime}>
+              <Text>
+                {dateparse.getHours()}:{dateparse.getMinutes()}
+                {dateparse.getHours() < 12 ? " am" : " pm"}
+              </Text>
+            </View>
+            <View style={styles().cardUser}>
+              <Text>{item.total}</Text>
+            </View>
+            <View style={styles().cardTrayid}>
+              <Text numberOfLines={10}>{item.description}</Text>
+            </View>
+          </View>
+        )
+      })}
+    </SafeAreaView>
   );
+
+  return (
+    <FlatList
+      showsVerticalScrollIndicator={false}
+      data={[data!]}
+      numColumns={2}
+      horizontal={false}
+      keyExtractor={(item) => item?.id}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+      renderItem={({ item }) => (render(item))}
+    />
+  )
 };
 
 export default DetailLedger;

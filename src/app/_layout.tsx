@@ -86,13 +86,12 @@ const MainLayout = () => {
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
         <Stack.Screen name='(panel)/ledger/ledger' options={{
           headerShown: true,
-          headerTransparent: true,
-          headerTitle: "ddd",
-          headerStyle: { backgroundColor: "green" }
+          headerTransparent: false,
+          headerTitle: "ledger list",
         }} />
         <Stack.Screen name='(panel)/ledger/[detailLedger]' options={{
           headerShown: true,
-          headerTitle: "Detail",
+          headerTitle: "ledger detail",
         }} />
 
       </Stack >

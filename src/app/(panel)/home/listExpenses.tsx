@@ -53,7 +53,7 @@ const ListExpenses = () => {
                 </View>
                 <View style={styles.items}>
                   <Text style={styles.itemsTextName}>{item.name}</Text>
-                  <Text style={styles.itemsTextDesc} numberOfLines={1} ellipsizeMode='tail'>{item.description}</Text>
+                  <Text style={styles.itemsTextDesc} numberOfLines={0} ellipsizeMode='tail'>{item.description}</Text>
                 </View>
               </View>
               <View style={styles.itemsTotal}>
