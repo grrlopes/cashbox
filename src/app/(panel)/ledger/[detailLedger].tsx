@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getExpenseById } from '@/api/expense';
 import { StringRecordId } from 'surrealdb';
+import ListLedger from '@/components/ListLedger';
 
 const DetailLedger = () => {
   const { detailLedger } = useLocalSearchParams();
@@ -14,9 +15,6 @@ const DetailLedger = () => {
     queryKey: ['detailLedger'],
     queryFn: () => getExpenseById(new StringRecordId(detailLedger.toString())),
   });
-  useEffect(() => {
-
-  }, [refetch()])
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -71,17 +69,17 @@ const DetailLedger = () => {
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
-      data={[data!]}
+      data={data?.items}
       numColumns={2}
       horizontal={false}
-      keyExtractor={(item) => item?.id}
+      keyExtractor={(item) => item?.name}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
         />
       }
-      renderItem={({ item }) => (render(item))}
+      renderItem={({ item }) => <ListLedger items={item} key={item.name}/>}
     />
   )
 };

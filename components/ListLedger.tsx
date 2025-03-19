@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
-import { ExpenseOut } from '@/interfaces/expense';
+import { ExpenseItemOut } from '@/interfaces/expense';
 
-const ListLedger = (data: ExpenseOut) => {
-  const dateparse = new Date(data.time.created_at)
+const ListLedger = (data: ExpenseItemOut) => {
+  const dateparse = new Date()
   return (
     <View style={styles().container}>
       <View style={styles(true).cardCount}>
         <Text>{2 + 1}</Text>
       </View>
       <View style={styles().cardSize}>
-        <Text style={{ fontWeight: "600" }}>{data.user.email}</Text>
+        <Text style={{ fontWeight: "600" }}>{"ddd"}</Text>
       </View>
       <View style={styles().cardTime}>
         <Text>
@@ -18,10 +18,10 @@ const ListLedger = (data: ExpenseOut) => {
         </Text>
       </View>
       <View style={styles().cardUser}>
-        <Text numberOfLines={2}>{data.user.status} </Text>
+        <Text numberOfLines={2}>{"cccc"} </Text>
       </View>
       <View style={styles().cardTrayid}>
-        <Text numberOfLines={2}>{data.user.name}</Text>
+        <Text numberOfLines={2}>{"bbbb"}</Text>
       </View>
     </View>
   );
