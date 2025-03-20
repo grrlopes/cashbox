@@ -22,8 +22,15 @@ type ExpenseOut = {
 };
 
 type ExpenseItemOut = {
-  id: string;
-  items: { description: string, total: string, name: string, icon?: { name: string; url: string } }[];
+  items: { description: string, total: string, name: string }[];
+};
+
+type ExpenseDatailLedgerOut = {
+  description: string; total: string; name: string;
+}
+
+type ExpenseDatail = {
+  description: string; total: string; name: string;
 }
 
 type ExpenseCreate = {
@@ -34,4 +41,4 @@ type ExpenseCreate = {
   icon: StringRecordId,
 }
 
-export { ExpenseCreate, Expense, ExpenseOut, ExpenseItemOut }
+export { ExpenseCreate, Expense, ExpenseOut, ExpenseItemOut, ExpenseDatailLedgerOut, ExpenseDatail }

@@ -1,15 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native'
-import { ExpenseItemOut } from '@/interfaces/expense';
+import { ExpenseDatail, ExpenseDatailLedgerOut } from '@/interfaces/expense';
+import { FC } from 'react';
 
-const ListLedger = (data: ExpenseItemOut) => {
+type Props = {
+  item: ExpenseDatail,
+  count: number,
+}
+
+const ListLedger: FC<Props> = (props: Props) => {
   const dateparse = new Date()
   return (
     <View style={styles().container}>
       <View style={styles(true).cardCount}>
-        <Text>{2 + 1}</Text>
+        <Text>{props.count}</Text>
       </View>
-      <View style={styles().cardSize}>
-        <Text style={{ fontWeight: "600" }}>{"ddd"}</Text>
+      <View style={styles().cardName}>
+        <Text style={{ fontWeight: "600" }}>{props.item.name}</Text>
       </View>
       <View style={styles().cardTime}>
         <Text>
@@ -17,11 +23,11 @@ const ListLedger = (data: ExpenseItemOut) => {
           {dateparse.getHours() < 12 ? " am" : " pm"}
         </Text>
       </View>
-      <View style={styles().cardUser}>
-        <Text numberOfLines={2}>{"cccc"} </Text>
+      <View style={styles().cardPrice}>
+        <Text>{props.item.total}</Text>
       </View>
-      <View style={styles().cardTrayid}>
-        <Text numberOfLines={2}>{"bbbb"}</Text>
+      <View style={styles().cardDesc}>
+        <Text numberOfLines={4}>{props.item.description}</Text>
       </View>
     </View>
   );
@@ -33,7 +39,7 @@ const styles = (done?: boolean) => StyleSheet.create({
   container: {
     flex: 1,
     height: 140,
-    margin: 16,
+    margin: 5,
     backgroundColor: "#ffffff",
     padding: 5,
     marginVertical: 16,
@@ -51,11 +57,11 @@ const styles = (done?: boolean) => StyleSheet.create({
   cardTime: {
     alignItems: "center"
   },
-  cardSize: {
+  cardName: {
     alignItems: "center",
   },
-  cardUser: {
-    paddingTop: 10
+  cardPrice: {
+    paddingTop: 1,
   },
   cardCount: {
     position: "absolute",
@@ -68,7 +74,7 @@ const styles = (done?: boolean) => StyleSheet.create({
     borderWidth: 3,
     borderColor: "#FFFFFF",
   },
-  cardTrayid: {
-    paddingTop: 10
+  cardDesc: {
+    paddingTop: 5
   }
 })

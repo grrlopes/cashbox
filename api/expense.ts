@@ -1,6 +1,6 @@
 import { getUserInfoByToken } from "@/store/persistor";
 import { getDb } from "./dbConn"
-import { Expense, ExpenseCreate, ExpenseItemOut, ExpenseOut } from "@/interfaces/expense";
+import { Expense, ExpenseCreate, ExpenseDatailLedgerOut, ExpenseItemOut, ExpenseOut } from "@/interfaces/expense";
 import { StringRecordId } from "surrealdb";
 
 /**
@@ -30,6 +30,16 @@ const ParseExpenses = (expenses: Expense[]): ExpenseOut[] => {
       icon: items_icon[index] ? { name: items_icon[index].name, url: items_icon[index].url } : undefined
     }))
   }));
+}
+
+const ParseLedger = (expense: ExpenseItemOut[]): ExpenseDatailLedgerOut[] => {
+  const [parsed] = expense.flat();
+  const result: ExpenseDatailLedgerOut[] = parsed.items.map((data) => ({
+    description: data.description,
+    name: data.name,
+    total: data.total
+  }))
+  return result;
 }
 
 export const getCurrentMonthExpense = async (): Promise<ExpenseOut[]> => {
@@ -142,20 +152,23 @@ export const getIdByCurrentDate = async (): Promise<string> => {
   }
 };
 
-export const getExpenseById = async (id: StringRecordId): Promise<ExpenseItemOut> => {
+export const getExpenseById = async (id: StringRecordId): Promise<ExpenseDatailLedgerOut[]> => {
   try {
     const db = await getDb();
     const token = await getUserInfoByToken();
     await db.authenticate(token?.token!)
 
-    const items = await db.select<ExpenseItemOut>(new StringRecordId(id));
-    return items;
+    const query = `
+      SELECT
+        items
+      FROM expense WHERE id = ${new StringRecordId(id)}
+    `;
+
+    const result = await db.query<ExpenseItemOut[]>(query)
+    const res = ParseLedger(result)
+    return res.flat()
   } catch (e) {
     console.warn("getExpenseById:", e)
-    const res: ExpenseItemOut = {
-      id: "",
-      items: []
-    }
-    return res
+    return [];
   }
-}
+};
