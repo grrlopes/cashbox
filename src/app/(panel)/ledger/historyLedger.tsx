@@ -76,4 +76,4 @@ const styles = (done?: boolean) => StyleSheet.create({
   cardDesc: {
     paddingTop: 5
   }
-})
+});
