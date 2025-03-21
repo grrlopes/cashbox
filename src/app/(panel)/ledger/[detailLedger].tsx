@@ -1,11 +1,11 @@
-import { ActivityIndicator, FlatList, RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import { ExpenseDatailLedgerOut, ExpenseItemOut } from '@/interfaces/expense';
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native'
+import { ExpenseDatailLedgerOut } from '@/interfaces/expense';
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getExpenseById } from '@/api/expense';
 import { StringRecordId } from 'surrealdb';
-import ListLedger from '@/components/ListLedger';
+import HistoryLedger from './historyLedger';
 
 const DetailLedger = () => {
   const { detailLedger } = useLocalSearchParams();
@@ -71,7 +71,7 @@ const DetailLedger = () => {
           onRefresh={onRefresh}
         />
       }
-      renderItem={({ item, index }) => <ListLedger item={item} count={index + 1} />}
+      renderItem={({ item, index }) => <HistoryLedger item={item} count={index + 1} />}
     />
   )
 };
