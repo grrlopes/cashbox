@@ -39,10 +39,9 @@ const styles = (done?: boolean) => StyleSheet.create({
   container: {
     flex: 1,
     height: 140,
-    margin: 5,
+    margin: 6,
     backgroundColor: "#ffffff",
     padding: 5,
-    marginVertical: 16,
     borderRadius: 16,
 
     shadowColor: '#000000',

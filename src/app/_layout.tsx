@@ -1,5 +1,6 @@
 import { validToken } from '@/api/auth'
 import iconUrl from '@/constants/IconUrl';
+import { globalStyles } from '@/helper/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, router } from 'expo-router'
@@ -87,10 +88,29 @@ const MainLayout = () => {
           headerShown: true,
           headerTransparent: false,
           headerTitle: "ledger list",
+          headerTitleStyle: { fontFamily: globalStyles.text.fontFamily, fontWeight: 600, fontSize: 14 },
+          headerRight: () => (
+            <View>
+              <Image
+                style={{ height: 50, width: 50 }}
+                source={{ uri: iconUrl.payLedger }}
+              />
+            </View>
+          )
         }} />
         <Stack.Screen name='(panel)/ledger/[detailLedger]' options={{
           headerShown: true,
           headerTitle: "ledger detail",
+          headerTitleStyle: { fontFamily: globalStyles.text.fontFamily, fontWeight: 600, fontSize: 14 },
+          headerRight: () => (
+            <View>
+              <Image
+                style={{ height: 50, width: 50 }}
+                source={{ uri: iconUrl.paymentLedger }}
+              />
+            </View>
+          )
+
         }} />
 
       </Stack >

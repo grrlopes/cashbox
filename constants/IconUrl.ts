@@ -4,6 +4,8 @@ const iconUrl = {
   icons: 'https://img.icons8.com/plasticine/100/medium-icons.png',
   user: 'https://img.icons8.com/plasticine/100/gender-neutral-user--v1.png',
   expense: 'https://img.icons8.com/plasticine/100/tax.png',
+  payLedger: 'https://img.icons8.com/plasticine/100/pay-date.png',
+  paymentLedger: 'https://img.icons8.com/plasticine/100/payment-history.png',
 }
 
 export default iconUrl;

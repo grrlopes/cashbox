@@ -57,7 +57,7 @@ export default ledger
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 55,
+    marginTop: 10,
     backgroundColor: Colors.dark.lighterGray,
   },
 })
