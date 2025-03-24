@@ -1,16 +1,46 @@
 import { doLogin, validToken } from '@/api/auth';
 import Colors from '@/constants/Colors'
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { TextInput as TxtInput } from 'react-native-paper';
+import TextInput from '@/components/input/TextInput';
+import { z } from 'zod';
+
+const schema = z.object({
+  email: z.string().email('Valid email is required'),
+  password: z.string().min(3, 'Password is required'),
+});
+
+type FormFields = {
+  email: string;
+  password: string;
+}
 
 export default function Login() {
-  const [email, setEmail] = useState<string>('root@admin.local');
-  const [password, setPassword] = useState<string>('');
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
-  const handleSigin = async () => {
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const {
+    handleSubmit,
+    setValue,
+    reset,
+    control,
+    formState: { errors, isSubmitting, isDirty, dirtyFields },
+  } = useForm<FormFields>({
+    resolver: zodResolver(schema),
+    defaultValues: { email: 'root@admin.local', password: '' },
+  });
+
+  const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
+    console.log(data.email)
     try {
-      await doLogin({ email: email, password: password });
+      await doLogin({ email: data.email, password: data.password });
       const logged = await validToken()
       if (logged) {
         router.replace('/(panel)/home/page')
@@ -18,7 +48,7 @@ export default function Login() {
     } catch (e) {
       Alert.alert('There is something wrong with your credencial');
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -31,29 +61,49 @@ export default function Login() {
       </View>
 
       <View style={styles.form}>
-        <View>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            placeholder='Type email...'
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-          />
-        </View>
 
-        <View>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            placeholder='Type password...'
-            secureTextEntry
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-          />
-        </View>
+        <Text style={styles.label}>Email</Text>
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Type email..."
+              returnKeyType="next"
+            />
+          )}
+        />
+        {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={handleSigin}>
-          <Text style={styles.buttonText}>Log In</Text>
+        <Text style={styles.label}>Password</Text>
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              returnKeyType="done"
+              value={value}
+              secureTextEntry={!passwordVisible}
+              right={
+                <TxtInput.Icon
+                  icon={passwordVisible ? 'eye-off' : 'eye'}
+                  onPress={togglePasswordVisibility}
+                />
+              }
+              style={styles.input}
+            />
+          )}
+        />
+        {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
+
+        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)} disabled={!dirtyFields.email! && !dirtyFields.password!}>
+          {isSubmitting ? <Text style={styles.buttonText}>Loading...</Text> : <Text style={styles.buttonText}>Log In</Text>}
         </TouchableOpacity>
 
         <Text>Don't have an account?
@@ -105,10 +155,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.dark.lightGray,
     borderRadius: 8,
-    marginBottom: 16,
-    padding: 12,
-    paddingTop: 14,
-    paddingBottom: 14,
+    marginBottom: 6,
+    padding: 10,
+    paddingTop: 1,
+    paddingBottom: 1,
   },
   button: {
     backgroundColor: Colors.dark.accentGreen,
@@ -125,5 +175,10 @@ const styles = StyleSheet.create({
   signing: {
     fontWeight: 'bold',
     color: Colors.dark.accentIndigo,
-  }
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
+  },
+
 })
