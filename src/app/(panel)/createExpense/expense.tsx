@@ -11,9 +11,9 @@ import DropdownIcon from '@/components/input/DropDownIcon';
 
 const schema = z.object({
   id: z.string(),
-  name: z.string().min(1, 'Name is required').max(15, 'Limit of 15 characters'),
-  description: z.string(),
-  total: z.string(),
+  name: z.string().min(3, 'Name is required min 3 characters').max(12, 'Limit of 15 characters'),
+  description: z.string().min(5, 'Description is required min 5 characters').max(20, 'Limit of 15 characters'),
+  total: z.string().min(1, 'Total is required min 1 number').max(15, 'Limit of 15 characters'),
   icon: z.string(),
 });
 
@@ -40,7 +40,7 @@ const CreateExpenses = () => {
     setValue,
     reset,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty, dirtyFields },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
     defaultValues: { id: '', name: '', total: '', description: '', icon: '' },
@@ -107,15 +107,17 @@ const CreateExpenses = () => {
               onChangeText={onChange}
               value={value}
               placeholder="Type total..."
+              keyboardType="numeric"
             />
           )}
         />
         {errors.total && <Text style={styles.error}>{errors.total.message}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}
+          disabled={!dirtyFields.name || !dirtyFields.total || !dirtyFields.description}>
           {isSubmitting ? <Text style={styles.buttonText}>Loading...</Text> : <Text style={styles.buttonText}>Create</Text>}
         </TouchableOpacity>
-        {!isSuccess ? <View></View> : <View><Text>Successul created</Text></View>}
+        {isSuccess && !isDirty ? <View><Text>Successul created</Text></View> : <View></View>}
       </View>
     </View>
   )
