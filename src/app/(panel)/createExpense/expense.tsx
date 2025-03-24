@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -17,26 +17,36 @@ const schema = z.object({
   icon: z.string(),
 });
 
+type FormFields = {
+  id: string,
+  name: string,
+  description: string,
+  total: string,
+  icon: string,
+}
+
 const CreateExpenses = () => {
   const client = useQueryClient();
-  const { mutateAsync, isSuccess, reset } = useMutation({
+  const { mutateAsync, isSuccess } = useMutation({
     mutationFn: (create: ExpenseCreate) => partialCreate(create),
     onSuccess: () => {
       client.invalidateQueries();
+      reset();
     },
   });
 
   const {
-    register,
     handleSubmit,
     setValue,
-    formState: { errors },
-  } = useForm({
+    reset,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<FormFields>({
     resolver: zodResolver(schema),
     defaultValues: { id: '', name: '', total: '', description: '', icon: '' },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
     const expenseId = await getIdByCurrentDate()
     data.id = new StringRecordId(expenseId);
     await mutateAsync(data);
@@ -57,44 +67,53 @@ const CreateExpenses = () => {
       <View style={styles.form}>
         <DropdownIcon getValues={getDropDownValue} />
 
-        <View>
-          <Text style={styles.label}>Name</Text>
-          <TextInput
-            placeholder='Type name...'
-            style={styles.input}
-            onFocus={() => reset()}
-            onChangeText={(text) => setValue('name', text)}
-            {...register('name').onChange}
-          />
-        </View>
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Type name..."
+            />
+          )}
+        />
         {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
 
-        <View>
-          <Text style={styles.label}>Description</Text>
-          <TextInput
-            placeholder='Type description...'
-            style={styles.input}
-            onFocus={() => reset()}
-            onChangeText={(text) => setValue('description', text)}
-            {...register('description')}
-          />
-          {errors.description && <Text style={styles.error}>{errors.description.message}</Text>}
-        </View>
+        <Controller
+          control={control}
+          name="description"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Type description..."
+            />
+          )}
+        />
+        {errors.description && <Text style={styles.error}>{errors.description.message}</Text>}
 
-        <View>
-          <Text style={styles.label}>Total</Text>
-          <TextInput
-            placeholder='Type total...'
-            style={styles.input}
-            onFocus={() => reset()}
-            onChangeText={(text) => setValue('total', text)}
-            {...register('total')}
-          />
-          {errors.total && <Text style={styles.error}>{errors.total.message}</Text>}
-        </View>
+        <Controller
+          control={control}
+          name="total"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Type total..."
+            />
+          )}
+        />
+        {errors.total && <Text style={styles.error}>{errors.total.message}</Text>}
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-          <Text style={styles.buttonText}>Create</Text>
+          {isSubmitting ? <Text style={styles.buttonText}>Loading...</Text> : <Text style={styles.buttonText}>Create</Text>}
         </TouchableOpacity>
         {!isSuccess ? <View></View> : <View><Text>Successul created</Text></View>}
       </View>
