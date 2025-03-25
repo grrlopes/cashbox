@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -10,30 +10,33 @@ import Colors from '@/constants/Colors';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required').max(15, 'Limit of 15 characters'),
-  url: z.string()//.url('Invalid URL'),
+  url: z.string().url('Valid url is required'),
 });
+
+type FormFields = z.infer<typeof schema>;
 
 const IconsForm = () => {
   const client = useQueryClient();
-  const { mutateAsync, isSuccess, reset } = useMutation({
+  const { mutateAsync, isSuccess } = useMutation({
     mutationFn: (iconCreate: Icon) => createIcon(iconCreate),
     onSuccess: () => {
       client.invalidateQueries();
+      clearform();
     },
   });
 
   const {
-    register,
+    control,
     handleSubmit,
-    setValue,
     reset: clearform,
-    formState: { errors },
+    formState: { errors, dirtyFields, isDirty, isSubmitting },
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: { name: '', url: '' },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
+    console.log(data)
     await mutateAsync(data);
   };
 
@@ -46,34 +49,43 @@ const IconsForm = () => {
       </View>
 
       <View style={styles.form}>
-        <View>
-          <Text style={styles.label}>Name</Text>
-          <TextInput
-            placeholder='Type icon name...'
-            style={styles.input}
-            onFocus={() => reset()}
-            onChangeText={(text) => setValue('name', text)}
-            {...register('name').onChange}
-          />
-        </View>
+        <Text style={styles.label}>Name</Text>
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Type icon name..."
+            />
+          )}
+        />
         {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
 
-        <View>
-          <Text style={styles.label}>Url</Text>
-          <TextInput
-            placeholder='Type url...'
-            style={styles.input}
-            onFocus={() => reset()}
-            onChangeText={(text) => setValue('url', text)}
-            {...register('url')}
-          />
-          {errors.url && <Text style={styles.error}>{errors.url.message}</Text>}
-        </View>
+        <Text style={styles.label}>Url</Text>
+        <Controller
+          control={control}
+          name="url"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Type url..."
+            />
+          )}
+        />
+        {errors.url && <Text style={styles.error}>{errors.url.message}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-          <Text style={styles.buttonText}>Create</Text>
+        <TouchableOpacity style={dirtyFields.name! && dirtyFields.url! ? styles.button : styles.button_disabled}
+          onPress={handleSubmit(onSubmit)} disabled={!(dirtyFields.url && dirtyFields.name)}>
+          {isSubmitting ? (<Text style={styles.buttonText}>Loading...</Text>) : (<Text style={styles.buttonText}>Create</Text>)}
         </TouchableOpacity>
-        {!isSuccess ? <View></View> : <View><Text>Successul created</Text></View>}
+        {isSuccess && !isDirty ? <View><Text>Successul created</Text></View> : <View></View>}
       </View>
     </View>
   )
@@ -124,6 +136,14 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingTop: 14,
     paddingBottom: 14,
+  },
+  button_disabled: {
+    backgroundColor: Colors.dark.accentGreen,
+    paddingTop: 14,
+    paddingBottom: 14,
+    alignItems: 'center',
+    width: '100%',
+    borderRadius: 8,
   },
   button: {
     backgroundColor: Colors.dark.accentGreen,
