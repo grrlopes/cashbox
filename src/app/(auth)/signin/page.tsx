@@ -14,10 +14,7 @@ const schema = z.object({
   password: z.string().min(3, 'Password is required'),
 });
 
-type FormFields = {
-  email: string;
-  password: string;
-}
+type FormFields = z.infer<typeof schema>;
 
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -28,17 +25,14 @@ export default function Login() {
 
   const {
     handleSubmit,
-    setValue,
-    reset,
     control,
-    formState: { errors, isSubmitting, isDirty, dirtyFields },
+    formState: { errors, isSubmitting, dirtyFields },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
-    defaultValues: { email: 'root@admin.local', password: '' },
+    defaultValues: { email: '', password: '' },
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-    console.log(data.email)
     try {
       await doLogin({ email: data.email, password: data.password });
       const logged = await validToken()
@@ -89,6 +83,7 @@ export default function Login() {
               onChangeText={onChange}
               returnKeyType="done"
               value={value}
+              placeholder="Type password..."
               secureTextEntry={!passwordVisible}
               right={
                 <TxtInput.Icon
@@ -102,8 +97,9 @@ export default function Login() {
         />
         {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)} disabled={!dirtyFields.email! && !dirtyFields.password!}>
-          {isSubmitting ? <Text style={styles.buttonText}>Loading...</Text> : <Text style={styles.buttonText}>Log In</Text>}
+        <TouchableOpacity style={dirtyFields.email! && dirtyFields.password! ? styles.button : styles.button_disabled}
+          onPress={handleSubmit(onSubmit)} disabled={!(dirtyFields.email && dirtyFields.password)}>
+          {isSubmitting ? (<Text style={styles.buttonText}>Loading...</Text>) : (<Text style={styles.buttonText}>Log In</Text>)}
         </TouchableOpacity>
 
         <Text>Don't have an account?
@@ -160,8 +156,16 @@ const styles = StyleSheet.create({
     paddingTop: 1,
     paddingBottom: 1,
   },
-  button: {
+  button_disabled: {
     backgroundColor: Colors.dark.accentGreen,
+    paddingTop: 14,
+    paddingBottom: 14,
+    alignItems: 'center',
+    width: '100%',
+    borderRadius: 8,
+  },
+  button: {
+    backgroundColor: Colors.dark.success,
     paddingTop: 14,
     paddingBottom: 14,
     alignItems: 'center',
