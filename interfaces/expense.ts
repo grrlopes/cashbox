@@ -35,10 +35,16 @@ type ExpenseDatail = {
 
 type ExpenseCreate = {
   id: string,
+  expenseid: string,
   description: string,
-  total: string,
+  total: number,
   name: string,
   icon: StringRecordId,
+  time: {
+    created_at: Date;
+    updated_at: Date;
+  };
+
 }
 
 export { ExpenseCreate, Expense, ExpenseOut, ExpenseItemOut, ExpenseDatailLedgerOut, ExpenseDatail }

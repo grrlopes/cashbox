@@ -13,7 +13,7 @@ const schema = z.object({
   id: z.string(),
   name: z.string().min(3, 'Name is required min 3 characters').max(12, 'Limit of 15 characters'),
   description: z.string().min(5, 'Description is required min 5 characters').max(20, 'Limit of 15 characters'),
-  total: z.string().min(1, 'Total is required min 1 number').max(15, 'Limit of 15 characters'),
+  total: z.string().min(1, 'Total is required'),
   icon: z.string(),
 });
 
@@ -49,6 +49,7 @@ const CreateExpenses = () => {
   const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
     const expenseId = await getIdByCurrentDate()
     data.id = new StringRecordId(expenseId);
+    data.total = parseInt(data.total);
     await mutateAsync(data);
   };
 
@@ -105,7 +106,7 @@ const CreateExpenses = () => {
               style={styles.input}
               onBlur={onBlur}
               onChangeText={onChange}
-              value={value}
+              value={value.toString()}
               placeholder="Type total..."
               keyboardType="numeric"
             />
