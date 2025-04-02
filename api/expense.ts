@@ -1,7 +1,7 @@
 import { getUserInfoByToken } from "@/store/persistor";
 import { getDb } from "./dbConn"
 import { Expense, ExpenseCreate, ExpenseDatailLedgerOut, ExpenseItemOut, ExpenseOut } from "@/interfaces/expense";
-import { StringRecordId, Uuid } from "surrealdb";
+import { RecordId, StringRecordId, Uuid } from "surrealdb";
 
 /**
  * Handles user authentication by validating credentials.
@@ -115,11 +115,20 @@ export const partialCreate = async (data: ExpenseCreate): Promise<any> => {
       }
     };
 
-    const query = `
-      UPSERT expense SET items = array::push(items, $item) WHERE id =  $id;
-    `;
+    let query: string;
 
-    const result = await db.query<[ExpenseCreate]>(query, { item: newItem, id: data.id });
+    if (data.id == "") {
+      query = `
+      INSERT INTO expense { user : $users, items : [$item], time: $now };
+    `;
+    } else {
+      query = `
+       UPSERT expense SET items = array::push(items, $item) WHERE id =  $id;
+     `;
+    }
+
+
+    const result = await db.query<[ExpenseCreate]>(query, { item: newItem, users: new RecordId("user", "qagu0w4yhzoy22rwigjz"), now: newItem.time, id: data.id });
     return result;
   } catch (e) {
     console.warn("partialCreate:", e)
