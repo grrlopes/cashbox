@@ -66,7 +66,7 @@ const CreateExpenses = () => {
       </View>
 
       <View style={styles.form}>
-        <DropdownIcon getValues={getDropDownValue} />
+        <DropdownIcon getValues={getDropDownValue} reset={isSuccess} />
 
         <Controller
           control={control}
@@ -77,7 +77,7 @@ const CreateExpenses = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Type name..."
+              placeholder="Type store name..."
             />
           )}
         />

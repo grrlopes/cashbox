@@ -9,11 +9,12 @@ import Colors from '@/constants/Colors';
 import { globalStyles } from '@/helper/theme';
 
 interface Props {
-  getValues(data: string): void;
+  getValues(data: string): void,
+  reset: boolean,
 }
 
 const DropdownIcon: FC<Props> = (props: Props) => {
-  const [value, setValue] = useState<Icon>();
+  const [value, setValue] = useState<Icon | null>();
   const { data, isLoading, refetch } = useQuery<Array<Icon>>({
     queryKey: ['dropdown'],
     queryFn: () => ListAllIcon(),
@@ -23,10 +24,16 @@ const DropdownIcon: FC<Props> = (props: Props) => {
     props.getValues(data)
   }
 
+  // Reset selection dropdown box
+  useEffect(() => {
+    setValue(null)
+  }, [props.reset])
+
   if (isLoading) return <ActivityIndicator size="large" color="blue" />;
 
   return (
     <Dropdown
+      activeColor={Colors.dark.lightGray}
       style={styles.dropdown}
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
