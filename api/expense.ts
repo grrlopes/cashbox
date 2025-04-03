@@ -102,6 +102,7 @@ export const partialCreate = async (data: ExpenseCreate): Promise<any> => {
     const db = await getDb();
     const token = await getUserInfoByToken();
     await db.authenticate(token?.token!);
+    const now = new Date();
 
     const newItem: Omit<ExpenseCreate, "expenseid"> = {
       id: Uuid.v4().toString(),
@@ -110,30 +111,28 @@ export const partialCreate = async (data: ExpenseCreate): Promise<any> => {
       total: data.total,
       icon: new StringRecordId(data.icon),
       time: {
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: now,
+        updated_at: now,
       }
     };
 
-    let query: string;
-
     if (data.id == "") {
-      query = `
-      INSERT INTO expense { user : $users, items : [$item], time: $now };
-    `;
-    } else {
-      query = `
-       UPSERT expense SET items = array::push(items, $item) WHERE id =  $id;
-     `;
+      return await db.insert<any>("expense", {
+        user: token?.id!,
+        items: [newItem],
+        time: newItem.time,
+      })
     }
 
+    const query = `
+       UPSERT expense SET items = array::push(items, $item) WHERE id = $id;
+     `;
 
-    const result = await db.query<[ExpenseCreate]>(query, { item: newItem, users: new RecordId("user", "qagu0w4yhzoy22rwigjz"), now: newItem.time, id: data.id });
-    return result;
+    return await db.query<[ExpenseCreate]>(query, { item: newItem, id: data.id });
   } catch (e) {
     console.warn("partialCreate:", e)
-    return
-  }
+    return null
+  };
 };
 
 export const getIdByCurrentDate = async (): Promise<string> => {
