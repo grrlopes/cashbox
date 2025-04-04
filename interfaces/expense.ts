@@ -22,15 +22,29 @@ type ExpenseOut = {
 };
 
 type ExpenseItemOut = {
-  items: { description: string, total: string, name: string }[];
+  items: {
+    description: string, total: string, name: string,
+    time: {
+      created_at: Date,
+      updated_at: Date
+    }
+  }[];
 };
 
 type ExpenseDatailLedgerOut = {
   description: string; total: string; name: string;
+  time: {
+    created_at: Date,
+    updated_at: Date
+  };
 }
 
 type ExpenseDatail = {
   description: string; total: string; name: string;
+  time: {
+    created_at: Date,
+    updated_at: Date
+  }
 }
 
 type ExpenseCreate = {

@@ -37,7 +37,11 @@ const ParseLedger = (expense: ExpenseItemOut[]): ExpenseDatailLedgerOut[] => {
   const result: ExpenseDatailLedgerOut[] = parsed.items.map((data) => ({
     description: data.description,
     name: data.name,
-    total: data.total
+    total: data.total,
+    time: {
+      created_at: data.time.created_at,
+      updated_at: data.time.updated_at
+    }
   }))
   return result;
 }

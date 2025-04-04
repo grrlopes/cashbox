@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { ExpenseDatail } from '@/interfaces/expense';
 import { FC } from 'react';
+import { formatCurrency } from '@/helper/currency';
 
 type Props = {
   item: ExpenseDatail,
@@ -19,12 +20,12 @@ const HistoryLedger: FC<Props> = (props: Props) => {
       </View>
       <View style={styles().cardTime}>
         <Text>
-          {dateparse.getHours()}:{dateparse.getMinutes()}
+          {props.item.time.created_at.getHours()}:{props.item.time.created_at.getMinutes()}
           {dateparse.getHours() < 12 ? " am" : " pm"}
         </Text>
       </View>
       <View style={styles().cardPrice}>
-        <Text>{props.item.total}</Text>
+        <Text>{formatCurrency(props.item.total.toString())}</Text>
       </View>
       <View style={styles().cardDesc}>
         <Text numberOfLines={4}>{props.item.description}</Text>
