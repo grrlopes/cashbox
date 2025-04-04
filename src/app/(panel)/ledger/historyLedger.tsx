@@ -20,12 +20,15 @@ const HistoryLedger: FC<Props> = (props: Props) => {
       </View>
       <View style={styles().cardTime}>
         <Text>
+          {props.item.time.created_at.toLocaleDateString()}
+        </Text>
+        <Text>
           {props.item.time.created_at.getHours()}:{props.item.time.created_at.getMinutes()}
           {dateparse.getHours() < 12 ? " am" : " pm"}
         </Text>
       </View>
       <View style={styles().cardPrice}>
-        <Text>{formatCurrency(props.item.total.toString())}</Text>
+        <Text>{formatCurrency((parseInt(props.item.total) / 100).toFixed(2))}</Text>
       </View>
       <View style={styles().cardDesc}>
         <Text numberOfLines={4}>{props.item.description}</Text>
@@ -76,5 +79,5 @@ const styles = (done?: boolean) => StyleSheet.create({
   },
   cardDesc: {
     paddingTop: 5
-  }
+  },
 });

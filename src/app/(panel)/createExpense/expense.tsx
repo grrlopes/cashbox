@@ -13,7 +13,7 @@ import { formatCurrency, parseCurrencyToCents } from '@/helper/currency';
 const schema = z.object({
   id: z.string(),
   name: z.string().min(3, 'Name is required min 3 characters').max(12, 'Limit of 15 characters'),
-  description: z.string().min(5, 'Description is required min 5 characters').max(20, 'Limit of 15 characters'),
+  description: z.string().min(5, 'Description is required min 5 characters').max(40, 'Limit of 40 characters'),
   total: z.string().min(1, 'Total is required'),
   icon: z.string(),
 });

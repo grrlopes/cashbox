@@ -57,7 +57,7 @@ const ListExpenses = () => {
                 </View>
               </View>
               <View style={styles.itemsTotal}>
-                <Text style={styles.itemsTextTotal}>{formatCurrency(item.total.toString())}</Text>
+                <Text style={styles.itemsTextTotal}>{formatCurrency((parseInt(item.total)/100).toFixed(2))}</Text>
               </View>
             </View>
           )
