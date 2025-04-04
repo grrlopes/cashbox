@@ -5,6 +5,7 @@ import { getCurrentMonthExpense } from '@/api/expense';
 import { ExpenseOut } from '@/interfaces/expense';
 import Colors from '@/constants/Colors';
 import { globalStyles } from '@/helper/theme';
+import { formatCurrency } from '@/helper/currency';
 
 const ListExpenses = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -56,7 +57,7 @@ const ListExpenses = () => {
                 </View>
               </View>
               <View style={styles.itemsTotal}>
-                <Text style={styles.itemsTextTotal}>{item.total}</Text>
+                <Text style={styles.itemsTextTotal}>{formatCurrency(item.total.toString())}</Text>
               </View>
             </View>
           )

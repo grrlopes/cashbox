@@ -8,6 +8,7 @@ import { getIdByCurrentDate, partialCreate } from '@/api/expense';
 import { ExpenseCreate } from '@/interfaces/expense';
 import { StringRecordId } from 'surrealdb';
 import DropdownIcon from '@/components/input/DropDownIcon';
+import { formatCurrency, parseCurrencyToCents } from '@/helper/currency';
 
 const schema = z.object({
   id: z.string(),
@@ -49,7 +50,7 @@ const CreateExpenses = () => {
   const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
     const expenseId = await getIdByCurrentDate()
     data.id = new StringRecordId(expenseId);
-    data.total = parseInt(data.total);
+    data.total = parseCurrencyToCents(data.total);
     await mutateAsync(data);
   };
 
@@ -106,7 +107,7 @@ const CreateExpenses = () => {
               style={styles.input}
               onBlur={onBlur}
               onChangeText={onChange}
-              value={value.toString()}
+              value={formatCurrency(value.toString())}
               placeholder="Type total..."
               keyboardType="numeric"
             />
