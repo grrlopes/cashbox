@@ -53,7 +53,6 @@ const MainLayout = () => {
       const logged = await validToken();
       if (logged) {
         router.replace('/(panel)/home/page');
-        // router.replace('/(panel)/ledger/ledger');
       } else {
         router.replace('/(auth)/signin/page');
       }
