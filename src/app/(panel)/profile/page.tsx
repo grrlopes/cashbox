@@ -15,6 +15,10 @@ export default function Profile() {
     router.replace("/icons");
   };
 
+  const handleNewStoreName = async () => {
+    router.replace("/vendors");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -39,6 +43,11 @@ export default function Profile() {
         <View style={styles.sections}>
           <TouchableOpacity onPress={handleNewIcon}>
             <Text style={styles.edit_password}>New icons</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.sections}>
+          <TouchableOpacity onPress={handleNewStoreName}>
+            <Text style={styles.edit_password}>New vendors</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -40,6 +40,30 @@ export default function Layout() {
             </View>
           )
         }} />
+
+        <Stack.Screen name="vendors" options={{
+          headerTransparent: false,
+          headerTitleStyle: { fontFamily: globalStyles.text.fontFamily, fontWeight: 600, fontSize: 14 },
+          headerBackVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.dismissTo("/profile/page")}>
+              <AntDesign
+                name="arrowleft"
+                size={24}
+                style={{ marginRight: 30 }}
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <View>
+              <Image
+                style={{ height: 50, width: 50 }}
+                source={{ uri: iconUrl.icons }}
+              />
+            </View>
+          )
+        }} />
+
       </Stack>
 
     </QueryClientProvider>
