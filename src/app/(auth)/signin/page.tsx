@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { TextInput as TxtInput } from 'react-native-paper';
 import TextInput from '@/components/input/TextInput';
 import { z } from 'zod';
@@ -46,6 +46,7 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor={Colors.dark.background} />
       <View style={styles.header}>
         <Text style={styles.logoText}>
           Login<Text style={{ color: Colors.dark.borderDark }}>In</Text>
