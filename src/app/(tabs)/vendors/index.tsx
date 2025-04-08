@@ -47,7 +47,7 @@ const Index = () => {
     }
   };
 
-  const handleDeleteIcon = (data: RecordId) => {
+  const handleDeleteVender = (data: RecordId) => {
     Alert.alert(
       "Confirm Deletion",
       "Are you sure you want to delete this item?",
@@ -78,7 +78,7 @@ const Index = () => {
               <Text style={styles.itemsTextName}>{item.name}</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.itemImageDelete} onPress={() => handleDeleteIcon(item.id)}>
+          <TouchableOpacity style={styles.itemImageDelete} onPress={() => handleDeleteVender(item.id)}>
             <FontAwesome name="trash" color={id % 2 === 0 ? "gray" : "lightgray"} size={32} />
           </TouchableOpacity>
         </View>

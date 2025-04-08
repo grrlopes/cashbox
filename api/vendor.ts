@@ -25,12 +25,13 @@ export const createVendor = async (vendorItem: Vendor): Promise<Vendor[]> => {
 }
 
 export const deleteVendor = async (vendorId: RecordId): Promise<string> => {
+  console.log(vendorId.toString())
   try {
     const db = await getDb();
     const token = await getUserInfoByToken();
     await db.authenticate(token?.token!);
 
-    const result = await db.delete(new RecordId('vendor', vendorId.id));
+    const result = await db.delete(new RecordId('store', vendorId.id));
 
     return result.id.toString()
   } catch (e) {
