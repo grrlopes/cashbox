@@ -58,7 +58,7 @@ export default function Layout() {
             <View>
               <Image
                 style={{ height: 50, width: 50 }}
-                source={{ uri: iconUrl.icons }}
+                source={{ uri: iconUrl.vendor }}
               />
             </View>
           )

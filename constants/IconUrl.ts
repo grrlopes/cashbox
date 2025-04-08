@@ -6,6 +6,7 @@ const iconUrl = {
   expense: 'https://img.icons8.com/plasticine/100/tax.png',
   payLedger: 'https://img.icons8.com/plasticine/100/pay-date.png',
   paymentLedger: 'https://img.icons8.com/plasticine/100/payment-history.png',
+  vendor: 'https://img.icons8.com/clouds/100/shop.png'
 }
 
 export default iconUrl;

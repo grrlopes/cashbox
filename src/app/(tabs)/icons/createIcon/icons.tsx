@@ -36,7 +36,6 @@ const IconsForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
-    console.log(data)
     await mutateAsync(data);
   };
 

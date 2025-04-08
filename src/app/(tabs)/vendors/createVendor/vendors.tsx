@@ -35,7 +35,6 @@ const VendorForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
-    console.log(data, "00000----00000")
     await mutateAsync(data);
   };
 
