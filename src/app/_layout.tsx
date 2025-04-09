@@ -109,7 +109,6 @@ const MainLayout = () => {
               />
             </View>
           )
-
         }} />
 
       </Stack >
