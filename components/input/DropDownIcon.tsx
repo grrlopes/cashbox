@@ -4,23 +4,26 @@ import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useQuery } from '@tanstack/react-query';
 import { Icon } from '@/interfaces/icon';
-import { ListAllIcon } from '@/api/icon';
 import Colors from '@/constants/Colors';
 import { globalStyles } from '@/helper/theme';
+import { Vendor } from '@/interfaces/vendor';
 
 interface Props {
-  getValues(data: string): void,
-  reset: boolean,
+  getValues(data: string): void;
+  reset: boolean;
+  listAllItem: () => Promise<Icon[] | Vendor[]>;
+  query: string;
+  placeholder: string;
 }
 
 const DropdownIcon: FC<Props> = (props: Props) => {
-  const [value, setValue] = useState<Icon | null>();
-  const { data, isLoading, refetch } = useQuery<Array<Icon>>({
-    queryKey: ['dropdown'],
-    queryFn: () => ListAllIcon(),
+  const [value, setValue] = useState<Icon | Vendor | null>();
+  const { data, isLoading, refetch } = useQuery<Array<Icon | Vendor>>({
+    queryKey: [props.query],
+    queryFn: () => props.listAllItem(),
   });
 
-  const iconValues = (data: string): void => {
+  const itemValues = (data: string): void => {
     props.getValues(data)
   }
 
@@ -44,12 +47,12 @@ const DropdownIcon: FC<Props> = (props: Props) => {
       maxHeight={400}
       labelField="name"
       valueField="id"
-      placeholder="Select icon"
+      placeholder={props.placeholder}
       searchPlaceholder="Search..."
       value={value}
-      onChange={(item: Icon) => {
+      onChange={(item: any) => {
         setValue(item);
-        iconValues(item.id.toString());
+        itemValues(item.id.toString());
       }}
       renderLeftIcon={() => (
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
