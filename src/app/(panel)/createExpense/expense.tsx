@@ -9,6 +9,8 @@ import { ExpenseCreate } from '@/interfaces/expense';
 import { StringRecordId } from 'surrealdb';
 import DropdownIcon from '@/components/input/DropDownIcon';
 import { formatCurrency, parseCurrencyToCents } from '@/helper/currency';
+import { ListAllIcon } from '@/api/icon';
+import { ListAllVendor } from '@/api/vendor';
 
 const schema = z.object({
   id: z.string(),
@@ -67,7 +69,13 @@ const CreateExpenses = () => {
       </View>
 
       <View style={styles.form}>
-        <DropdownIcon getValues={getDropDownValue} reset={isSuccess} />
+        <DropdownIcon
+          getValues={getDropDownValue}
+          reset={isSuccess}
+          listAllItem={ListAllIcon}
+          query={"icondropdown"}
+          placeholder={"select icon..."}
+        />
 
         <Controller
           control={control}
@@ -83,6 +91,14 @@ const CreateExpenses = () => {
           )}
         />
         {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
+
+        <DropdownIcon
+          getValues={getDropDownValue}
+          reset={isSuccess}
+          listAllItem={ListAllVendor}
+          query={"vendordropdown"}
+          placeholder={"select vendor..."}
+        />
 
         <Controller
           control={control}
