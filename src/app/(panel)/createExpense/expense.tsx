@@ -14,7 +14,7 @@ import { ListAllVendor } from '@/api/vendor';
 
 const schema = z.object({
   id: z.string(),
-  name: z.string().min(2, 'Name is required min 3 characters').max(12, 'Limit of 15 characters'),
+  vendor: z.string().min(2, 'Vendor is required min 3 characters').max(12, 'Limit of 15 characters'),
   description: z.string().min(5, 'Description is required min 5 characters').max(40, 'Limit of 40 characters'),
   total: z.string().min(1, 'Total is required'),
   icon: z.string(),
@@ -22,7 +22,7 @@ const schema = z.object({
 
 type FormFields = {
   id: string,
-  name: string,
+  vendor: string,
   description: string,
   total: string,
   icon: string,
@@ -46,7 +46,7 @@ const CreateExpenses = () => {
     formState: { errors, isSubmitting, isDirty, dirtyFields },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
-    defaultValues: { id: '', name: '', total: '', description: '', icon: '' },
+    defaultValues: { id: '', vendor: '', total: '', description: '', icon: '' },
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
@@ -61,7 +61,7 @@ const CreateExpenses = () => {
   }
 
   const getDropDownVendor = (data: string): void => {
-    setValue('name', data, { shouldDirty: true, shouldValidate: true })
+    setValue('vendor', data, { shouldDirty: true, shouldValidate: true })
   }
 
   return (
@@ -83,7 +83,7 @@ const CreateExpenses = () => {
 
         <Controller
           control={control}
-          name="name"
+          name="vendor"
           render={() => (
             <DropdownIcon
               getValues={getDropDownVendor}
@@ -94,7 +94,7 @@ const CreateExpenses = () => {
             />
           )}
         />
-        {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
+        {errors.vendor && <Text style={styles.error}>{errors.vendor.message}</Text>}
 
         <Controller
           control={control}
@@ -128,7 +128,7 @@ const CreateExpenses = () => {
         {errors.total && <Text style={styles.error}>{errors.total.message}</Text>}
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}
-          disabled={!dirtyFields.name || !dirtyFields.total || !dirtyFields.description}>
+          disabled={!dirtyFields.vendor || !dirtyFields.total || !dirtyFields.description}>
           {isSubmitting ? <Text style={styles.buttonText}>Loading...</Text> : <Text style={styles.buttonText}>Create</Text>}
         </TouchableOpacity>
         {isSuccess && !isDirty ? <View><Text>Successul created</Text></View> : <View></View>}
