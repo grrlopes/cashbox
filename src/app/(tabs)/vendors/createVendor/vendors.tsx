@@ -47,7 +47,7 @@ const VendorForm = () => {
       </View>
 
       <View style={styles.form}>
-        <Text style={styles.label}>Name</Text>
+        <Text style={styles.label}>Vendor</Text>
         <Controller
           control={control}
           name="name"
@@ -57,7 +57,7 @@ const VendorForm = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Type icon name..."
+              placeholder="Type name..."
             />
           )}
         />

@@ -9,7 +9,7 @@ export const createVendor = async (vendorItem: Vendor): Promise<Vendor[]> => {
     const token = await getUserInfoByToken();
     await db.authenticate(token?.token!);
 
-    const result = await db.insert<Vendor, Omit<Vendor, "id">>('store', {
+    const result = await db.insert<Vendor, Omit<Vendor, "id">>('vendor', {
       name: vendorItem.name,
       time: {
         created_at: new Date(),
@@ -30,7 +30,7 @@ export const deleteVendor = async (vendorId: RecordId): Promise<string> => {
     const token = await getUserInfoByToken();
     await db.authenticate(token?.token!);
 
-    const result = await db.delete(new RecordId('store', vendorId.id));
+    const result = await db.delete(new RecordId('vendor', vendorId.id));
 
     return result.id.toString()
   } catch (e) {
@@ -45,7 +45,7 @@ export const ListAllVendor = async (): Promise<Vendor[]> => {
     const token = await getUserInfoByToken();
     await db.authenticate(token?.token!)
 
-    const result = await db.select<Vendor>("store");
+    const result = await db.select<Vendor>("vendor");
     return result.flat();
   } catch (e) {
     console.warn("validVendorToken:", e)
