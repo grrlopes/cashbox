@@ -36,7 +36,7 @@ const ParseLedger = (expense: ExpenseItemOut[]): ExpenseDatailLedgerOut[] => {
   const [parsed] = expense.flat();
   const result: ExpenseDatailLedgerOut[] = parsed.items.map((data) => ({
     description: data.description,
-    name: data.name,
+    name: data.vendor,
     total: data.total,
     time: {
       created_at: data.time.created_at,
@@ -56,7 +56,7 @@ export const getCurrentMonthExpense = async (): Promise<ExpenseOut[]> => {
     const query = `
       SELECT
         id,
-        items.{description, total, name},
+        items.{description, total, vendor},
         items.icon.*.{name, id, url} AS items_icon,
         user.*,
         time
@@ -83,7 +83,7 @@ export const listAllExpenses = async (): Promise<ExpenseOut[]> => {
     const query = `
       SELECT
         id,
-        items.{description, total, name},
+        items.{description, total, vendor},
         items.icon.*.{name, id, url} AS items_icon,
         user.*,
         time
@@ -110,7 +110,7 @@ export const partialCreate = async (data: ExpenseCreate): Promise<any> => {
 
     const newItem: Omit<ExpenseCreate, "expenseid"> = {
       id: Uuid.v4().toString(),
-      name: data.name,
+      vendor: data.vendor,
       description: data.description,
       total: data.total,
       icon: new StringRecordId(data.icon),

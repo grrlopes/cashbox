@@ -2,7 +2,7 @@ import { StringRecordId } from "surrealdb";
 
 type Expense = {
   id: string;
-  items: { description: string; total: string, name: string }[];
+  items: { description: string; total: string, vendor: string }[];
   items_icon: { id: string; name: string; url: string }[];
   user: { email: string, id: string, name: string, role: string, status: string };
   time: {
@@ -14,7 +14,7 @@ type Expense = {
 type ExpenseOut = {
   id: string;
   user: { email: string, id: string, name: string, role: string, status: string };
-  items: { description: string, total: string, name: string, icon?: { name: string; url: string } }[];
+  items: { description: string, total: string, vendor: string, icon?: { name: string; url: string } }[];
   time: {
     created_at: string;
     updated_at: string;
@@ -23,7 +23,7 @@ type ExpenseOut = {
 
 type ExpenseItemOut = {
   items: {
-    description: string, total: string, name: string,
+    description: string, total: string, vendor: string,
     time: {
       created_at: Date,
       updated_at: Date
@@ -40,7 +40,7 @@ type ExpenseDatailLedgerOut = {
 }
 
 type ExpenseDatail = {
-  description: string; total: string; name: string;
+  description: string; total: string; vendor: string;
   time: {
     created_at: Date,
     updated_at: Date
@@ -52,7 +52,7 @@ type ExpenseCreate = {
   expenseid: string,
   description: string,
   total: number,
-  name: string,
+  vendor: string,
   icon: StringRecordId,
   time: {
     created_at: Date;

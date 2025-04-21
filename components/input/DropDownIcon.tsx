@@ -29,7 +29,7 @@ const DropdownIcon: FC<Props> = (props: Props) => {
         props.getValues(data.id.toString())
         break;
       case "vendordropdown":
-        props.getValues(data.vendor.toString())
+        props.getValues(data.name.toString())
         break;
     }
   }

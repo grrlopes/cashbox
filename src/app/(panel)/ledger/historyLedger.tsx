@@ -16,7 +16,7 @@ const HistoryLedger: FC<Props> = (props: Props) => {
         <Text>{props.count}</Text>
       </View>
       <View style={styles().cardName}>
-        <Text style={{ fontWeight: "600" }}>{props.item.name}</Text>
+        <Text style={{ fontWeight: "600" }}>{props.item.vendor}</Text>
       </View>
       <View style={styles().cardTime}>
         <Text>
