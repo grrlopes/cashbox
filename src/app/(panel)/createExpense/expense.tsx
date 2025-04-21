@@ -14,11 +14,10 @@ import { ListAllVendor } from '@/api/vendor';
 
 const schema = z.object({
   id: z.string(),
-  name: z.string().min(3, 'Name is required min 3 characters').max(12, 'Limit of 15 characters'),
+  name: z.string().min(2, 'Name is required min 3 characters').max(12, 'Limit of 15 characters'),
   description: z.string().min(5, 'Description is required min 5 characters').max(40, 'Limit of 40 characters'),
   total: z.string().min(1, 'Total is required'),
   icon: z.string(),
-  vendor: z.string(),
 });
 
 type FormFields = {
@@ -27,7 +26,6 @@ type FormFields = {
   description: string,
   total: string,
   icon: string,
-  vendor: string,
 }
 
 const CreateExpenses = () => {
@@ -48,7 +46,7 @@ const CreateExpenses = () => {
     formState: { errors, isSubmitting, isDirty, dirtyFields },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
-    defaultValues: { id: '', name: '', vendor:'', total: '', description: '', icon: '' },
+    defaultValues: { id: '', name: '', total: '', description: '', icon: '' },
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
@@ -59,11 +57,11 @@ const CreateExpenses = () => {
   };
 
   const getDropDownValue = (data: string): void => {
-    setValue('icon', data)
+    setValue('icon', data, { shouldDirty: true, shouldValidate: true })
   }
 
   const getDropDownVendor = (data: string): void => {
-    setValue('vendor', data)
+    setValue('name', data, { shouldDirty: true, shouldValidate: true })
   }
 
   return (
@@ -86,25 +84,17 @@ const CreateExpenses = () => {
         <Controller
           control={control}
           name="name"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Type store name..."
+          render={() => (
+            <DropdownIcon
+              getValues={getDropDownVendor}
+              reset={isSuccess}
+              listAllItem={ListAllVendor}
+              query={"vendordropdown"}
+              placeholder={"select vendor..."}
             />
           )}
         />
         {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
-
-        <DropdownIcon
-          getValues={getDropDownVendor}
-          reset={isSuccess}
-          listAllItem={ListAllVendor}
-          query={"vendordropdown"}
-          placeholder={"select vendor..."}
-        />
 
         <Controller
           control={control}
