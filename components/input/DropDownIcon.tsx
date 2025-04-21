@@ -9,7 +9,7 @@ import { globalStyles } from '@/helper/theme';
 import { Vendor } from '@/interfaces/vendor';
 
 interface Props {
-  getValues(data: string): void;
+  getValues(data: any): void;
   reset: boolean;
   listAllItem: () => Promise<Icon[] | Vendor[]>;
   query: string;
@@ -23,8 +23,15 @@ const DropdownIcon: FC<Props> = (props: Props) => {
     queryFn: () => props.listAllItem(),
   });
 
-  const itemValues = (data: string): void => {
-    props.getValues(data)
+  const itemValues = (data: any): void => {
+    switch (props.query) {
+      case "icondropdown":
+        props.getValues(data.id.toString())
+        break;
+      case "vendordropdown":
+        props.getValues(data.name.toString())
+        break;
+    }
   }
 
   // Reset selection dropdown box
@@ -52,7 +59,7 @@ const DropdownIcon: FC<Props> = (props: Props) => {
       value={value}
       onChange={(item: any) => {
         setValue(item);
-        itemValues(item.id.toString());
+        itemValues(item);
       }}
       renderLeftIcon={() => (
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />

@@ -25,7 +25,6 @@ export const createVendor = async (vendorItem: Vendor): Promise<Vendor[]> => {
 }
 
 export const deleteVendor = async (vendorId: RecordId): Promise<string> => {
-  console.log(vendorId.toString())
   try {
     const db = await getDb();
     const token = await getUserInfoByToken();

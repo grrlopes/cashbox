@@ -18,6 +18,7 @@ const schema = z.object({
   description: z.string().min(5, 'Description is required min 5 characters').max(40, 'Limit of 40 characters'),
   total: z.string().min(1, 'Total is required'),
   icon: z.string(),
+  vendor: z.string(),
 });
 
 type FormFields = {
@@ -26,6 +27,7 @@ type FormFields = {
   description: string,
   total: string,
   icon: string,
+  vendor: string,
 }
 
 const CreateExpenses = () => {
@@ -46,7 +48,7 @@ const CreateExpenses = () => {
     formState: { errors, isSubmitting, isDirty, dirtyFields },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
-    defaultValues: { id: '', name: '', total: '', description: '', icon: '' },
+    defaultValues: { id: '', name: '', vendor:'', total: '', description: '', icon: '' },
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data: any) => {
@@ -58,6 +60,10 @@ const CreateExpenses = () => {
 
   const getDropDownValue = (data: string): void => {
     setValue('icon', data)
+  }
+
+  const getDropDownVendor = (data: string): void => {
+    setValue('vendor', data)
   }
 
   return (
@@ -93,7 +99,7 @@ const CreateExpenses = () => {
         {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
 
         <DropdownIcon
-          getValues={getDropDownValue}
+          getValues={getDropDownVendor}
           reset={isSuccess}
           listAllItem={ListAllVendor}
           query={"vendordropdown"}
