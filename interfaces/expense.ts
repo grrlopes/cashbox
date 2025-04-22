@@ -32,7 +32,7 @@ type ExpenseItemOut = {
 };
 
 type ExpenseDatailLedgerOut = {
-  description: string; total: string; name: string;
+  description: string; total: string; vendor: string;
   time: {
     created_at: Date,
     updated_at: Date

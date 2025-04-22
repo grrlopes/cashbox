@@ -36,7 +36,7 @@ const ParseLedger = (expense: ExpenseItemOut[]): ExpenseDatailLedgerOut[] => {
   const [parsed] = expense.flat();
   const result: ExpenseDatailLedgerOut[] = parsed.items.map((data) => ({
     description: data.description,
-    name: data.vendor,
+    vendor: data.vendor,
     total: data.total,
     time: {
       created_at: data.time.created_at,

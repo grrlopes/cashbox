@@ -39,7 +39,6 @@ const ListExpenses = () => {
           <View style={{ flexDirection: "row", alignSelf: "center", gap: 4 }}>
             <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { weekday: "long" })},</Text>
             <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { month: "long" })}</Text>
-            <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).toLocaleDateString('en-us', { day: "numeric" })},</Text>
             <Text style={styles.headerDateText}>{new Date(item.time.created_at.toString()).getFullYear()}</Text>
           </View>
         </View>
@@ -53,7 +52,7 @@ const ListExpenses = () => {
                   />
                 </View>
                 <View style={styles.items}>
-                  <Text style={styles.itemsTextName}>{item.name}</Text>
+                  <Text style={styles.itemsTextName}>{item.vendor}</Text>
                 </View>
               </View>
               <View style={styles.itemsTotal}>
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
   itemsTextName: {
     fontFamily: globalStyles.text.fontFamily,
     fontWeight: 600,
-    fontSize: 13,
+    fontSize: 14,
     color: Colors.dark.darkGray
   },
   itemsTextTotal: {
@@ -141,6 +140,7 @@ const styles = StyleSheet.create({
   },
   itemDescription: {
     flexDirection: "row",
+    gap: 10,
   },
   itemImage: {
     height: Colors.dark.heigh,

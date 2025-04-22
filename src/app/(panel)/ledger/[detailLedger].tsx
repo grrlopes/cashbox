@@ -41,7 +41,7 @@ const DetailLedger = () => {
       data={data!}
       numColumns={2}
       horizontal={false}
-      keyExtractor={(item) => item.name}
+      keyExtractor={(item) => item.vendor}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
